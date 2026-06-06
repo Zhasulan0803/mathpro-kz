@@ -23,6 +23,45 @@ export default function Home() {
     setFormLoading(false)
   }
 
+  const courses = [
+    {
+      id: 1,
+      tag: "Базалық",
+      title: "Математика негіздері",
+      desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.",
+      price: "25 000",
+      rating: "4.7",
+      students: "342",
+      hot: false,
+      lessons: "45 сабақ",
+      duration: "3 ай",
+    },
+    {
+      id: 2,
+      tag: "Орта деңгей",
+      title: "ҰБТ Толық дайындық",
+      desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.",
+      price: "40 000",
+      rating: "4.9",
+      students: "687",
+      hot: true,
+      lessons: "90 сабақ",
+      duration: "6 ай",
+    },
+    {
+      id: 3,
+      tag: "Интенсив",
+      title: "ҰБТ Экспресс: 100 балл",
+      desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.",
+      price: "75 000",
+      rating: "4.8",
+      students: "219",
+      hot: false,
+      lessons: "120 сабақ",
+      duration: "Ментор",
+    },
+  ]
+
   return (
     <main style={{ minHeight: "100vh", background: "white", color: "#1c1d1f", fontFamily: "Inter, sans-serif" }}>
 
@@ -56,18 +95,16 @@ export default function Home() {
             ҰБТ математикасынан <span style={{ color: "#5624d0" }}>100 балл</span> алыңыз
           </h1>
           <p style={{ fontSize: "1rem", color: "#6a6f73", marginBottom: "1.5rem", lineHeight: 1.7 }}>
-            Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз.
+            Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз. Нақты әдіс, нәтижелі сабақтар.
           </p>
           <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#courses" style={{ background: "#5624d0", color: "white", padding: "0.875rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", flex: "1", maxWidth: "200px", textAlign: "center" }}>
+            <a href="#courses" style={{ background: "#5624d0", color: "white", padding: "0.875rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none" }}>
               Курсты бастау →
             </a>
-            <a href="#form" style={{ background: "white", color: "#5624d0", border: "2px solid #5624d0", padding: "0.875rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", flex: "1", maxWidth: "200px", textAlign: "center" }}>
+            <a href="#form" style={{ background: "white", color: "#5624d0", border: "2px solid #5624d0", padding: "0.875rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none" }}>
               Тегін сабақ
             </a>
           </div>
-
-          {/* STATS */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "2rem", maxWidth: "400px", margin: "2rem auto 0" }}>
             {[["1200+", "Оқушы"], ["94%", "Нәтиже"], ["250+", "Видео сабақ"], ["500+", "ҰБТ тест"]].map(([num, label]) => (
               <div key={label} style={{ textAlign: "center", background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1rem" }}>
@@ -84,11 +121,7 @@ export default function Home() {
         <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "0.5rem" }}>Курстар</h2>
         <p style={{ color: "#6a6f73", marginBottom: "1.5rem", fontSize: "0.9rem" }}>Мақсатыңызға сәйкес курс таңдаңыз</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-          {[
-            { tag: "Базалық", title: "Математика негіздері", desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.", price: "25 000", rating: "4.7", students: "342", hot: false },
-            { tag: "Орта деңгей", title: "ҰБТ Толық дайындық", desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.", price: "40 000", rating: "4.9", students: "687", hot: true },
-            { tag: "Интенсив", title: "ҰБТ Экспресс: 100 балл", desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.", price: "75 000", rating: "4.8", students: "219", hot: false },
-          ].map((c) => (
+          {courses.map((c) => (
             <div key={c.title} style={{ border: "1px solid #d1d7dc", borderRadius: "8px", overflow: "hidden", position: "relative" }}>
               {c.hot && <div style={{ position: "absolute", top: "12px", left: "12px", background: "#f4c150", color: "#1c1d1f", fontSize: "0.7rem", fontWeight: 700, padding: "0.2rem 0.6rem", borderRadius: "4px" }}>BESTSELLER</div>}
               <div style={{ background: "#f7f9fa", height: "120px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.5rem" }}>📐</div>
@@ -102,9 +135,14 @@ export default function Home() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid #d1d7dc", paddingTop: "0.75rem" }}>
                   <div style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1c1d1f" }}>{c.price} ₸<span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#6a6f73" }}>/ай</span></div>
-                  <a href={"https://wa.me/87075687067?text=Салем! " + c.title + " курсын алгым келеді."} target="_blank" rel="noopener noreferrer" style={{ background: "#5624d0", color: "white", padding: "0.5rem 0.875rem", borderRadius: "4px", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" }}>
-                    Сатып алу
-                  </a>
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <Link href={"/courses/" + c.id} style={{ background: "white", color: "#5624d0", border: "1px solid #5624d0", padding: "0.4rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textDecoration: "none" }}>
+                      Толығырақ
+                    </Link>
+                    <a href={"https://wa.me/87075687067?text=Салем! " + c.title + " курсын алгым келеді. Багасы: " + c.price + " тенге/ай"} target="_blank" rel="noopener noreferrer" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textDecoration: "none" }}>
+                      Сатып алу
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,7 +161,7 @@ export default function Home() {
               <div style={{ color: "#5624d0", fontSize: "0.875rem", fontWeight: 600, marginBottom: "0.75rem" }}>Математика мұғалімі · ҰБТ сарапшысы</div>
               <div style={{ display: "flex", gap: "1.5rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
                 {[["4.9 ★", "Рейтинг"], ["1200+", "Оқушы"], ["10+", "Жыл"]].map(([val, lab]) => (
-                  <div key={lab} style={{ textAlign: "center" }}>
+                  <div key={lab}>
                     <div style={{ fontWeight: 800, fontSize: "1.1rem", color: "#1c1d1f" }}>{val}</div>
                     <div style={{ fontSize: "0.75rem", color: "#6a6f73" }}>{lab}</div>
                   </div>
@@ -212,7 +250,6 @@ export default function Home() {
           <Link href="/login" style={{ color: "#6a6f73", textDecoration: "none" }}>Кіру</Link>
           <Link href="/dashboard" style={{ color: "#6a6f73", textDecoration: "none" }}>Дашборд</Link>
           <Link href="/tests" style={{ color: "#6a6f73", textDecoration: "none" }}>Тесттер</Link>
-          <Link href="/admin" style={{ color: "#6a6f73", textDecoration: "none" }}>Админ</Link>
         </div>
       </footer>
 
