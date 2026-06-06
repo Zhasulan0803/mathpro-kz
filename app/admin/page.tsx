@@ -1,102 +1,141 @@
-"use client";
-import { useState } from "react";
+"use client"
+import { useState } from "react"
+
+const ADMIN_PASSWORD = "iqmath2025"
 
 const stats = [
-  { label: "Барлық оқушы", value: "1,248", icon: "👨‍🎓", color: "text-blue-400" },
-  { label: "Белсенді курс", value: "3", icon: "📚", color: "text-yellow-400" },
-  { label: "Бүгінгі төлем", value: "340 000 ₸", icon: "💰", color: "text-green-400" },
-  { label: "Жаңа оқушы", value: "+24", icon: "📈", color: "text-purple-400" },
-];
+  { label: "Барлық оқушы", value: "1,248", icon: "👨‍🎓", color: "#5624d0" },
+  { label: "Белсенді курс", value: "3", icon: "📚", color: "#a435f0" },
+  { label: "Бүгінгі төлем", value: "340 000 ₸", icon: "💰", color: "#16a34a" },
+  { label: "Жаңа оқушы", value: "+24", icon: "📈", color: "#d97706" },
+]
 
 const users = [
   { name: "Аяша Нұрланова", email: "ayasha@mail.ru", course: "ҰБТ Толық", status: "Белсенді", date: "01.06.2025" },
   { name: "Дәурен Қалиев", email: "dauren@mail.ru", course: "Базалық", status: "Белсенді", date: "28.05.2025" },
   { name: "Жанар Ерланқызы", email: "zhanar@mail.ru", course: "Интенсив", status: "Белсенді", date: "25.05.2025" },
   { name: "Арман Бекұлы", email: "arman@mail.ru", course: "ҰБТ Толық", status: "Тоқтатылды", date: "20.05.2025" },
-  { name: "Сәуле Нұрқызы", email: "saule@mail.ru", course: "Базалық", status: "Белсенді", date: "15.05.2025" },
-];
+]
 
-const tabs = ["Дашборд", "Оқушылар", "Курстар", "Төлемдер", "Статистика"];
+const tabs = ["Дашборд", "Оқушылар", "Курстар", "Төлемдер"]
 
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = useState("Дашборд");
+  const [password, setPassword] = useState("")
+  const [isAuth, setIsAuth] = useState(false)
+  const [error, setError] = useState("")
+  const [activeTab, setActiveTab] = useState("Дашборд")
+
+  function handleLogin() {
+    if (password === ADMIN_PASSWORD) {
+      setIsAuth(true)
+      setError("")
+    } else {
+      setError("Пароль қате!")
+    }
+  }
+
+  if (!isAuth) {
+    return (
+      <main style={{ minHeight: "100vh", background: "#f7f9fa", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Inter, sans-serif" }}>
+        <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "2.5rem", width: "100%", maxWidth: "400px" }}>
+          <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🔐</div>
+            <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f" }}>Админ панелі</h1>
+            <p style={{ color: "#6a6f73", fontSize: "0.875rem" }}>IQ Math басқару жүйесі</p>
+          </div>
+
+          {error && (
+            <div style={{ background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: "4px", padding: "0.75rem", color: "#dc2626", fontSize: "0.875rem", marginBottom: "1rem", textAlign: "center" }}>
+              {error}
+            </div>
+          )}
+
+          <div style={{ marginBottom: "1rem" }}>
+            <label style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1c1d1f", display: "block", marginBottom: "0.375rem" }}>Пароль</label>
+            <input
+              type="password"
+              placeholder="Админ паролін енгізіңіз"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+              style={{ width: "100%", padding: "0.75rem 1rem", border: "1px solid #d1d7dc", borderRadius: "4px", fontSize: "1rem", outline: "none", boxSizing: "border-box" }}
+            />
+          </div>
+          <button
+            onClick={handleLogin}
+            style={{ width: "100%", background: "#5624d0", color: "white", padding: "0.875rem", borderRadius: "4px", fontWeight: 700, border: "none", cursor: "pointer", fontSize: "1rem" }}
+          >
+            Кіру →
+          </button>
+        </div>
+      </main>
+    )
+  }
 
   return (
-    <main className="min-h-screen bg-[#0A1628] text-white flex">
+    <main style={{ minHeight: "100vh", background: "#f7f9fa", fontFamily: "Inter, sans-serif", display: "flex" }}>
 
       {/* SIDEBAR */}
-      <aside className="w-56 border-r border-white/10 p-5 flex flex-col gap-1 flex-shrink-0">
-        <div className="text-lg font-black mb-2">⭐ MathPro</div>
-        <div className="text-xs text-red-400 font-semibold mb-6 bg-red-500/10 px-2 py-1 rounded-lg">🔐 Админ панелі</div>
+      <aside style={{ width: "220px", background: "white", borderRight: "1px solid #d1d7dc", padding: "1.5rem 0", flexShrink: 0 }}>
+        <div style={{ padding: "0 1rem", marginBottom: "1.5rem" }}>
+          <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "#5624d0" }}>IQ Math</div>
+          <div style={{ fontSize: "0.75rem", color: "#dc2626", fontWeight: 600, background: "#fee2e2", padding: "0.2rem 0.5rem", borderRadius: "4px", display: "inline-block", marginTop: "0.25rem" }}>Админ панелі</div>
+        </div>
         {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-sm transition text-left ${activeTab === tab ? "bg-yellow-500/10 text-yellow-400" : "text-gray-400 hover:bg-white/5"}`}
-          >
+          <button key={tab} onClick={() => setActiveTab(tab)} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.75rem 1rem", width: "100%", textAlign: "left", background: activeTab === tab ? "#f7f9fa" : "transparent", borderLeft: activeTab === tab ? "3px solid #5624d0" : "3px solid transparent", color: activeTab === tab ? "#5624d0" : "#1c1d1f", fontWeight: activeTab === tab ? 700 : 400, fontSize: "0.875rem", border: "none", cursor: "pointer" }}>
             {tab === "Дашборд" && "📊"}
             {tab === "Оқушылар" && "👨‍🎓"}
             {tab === "Курстар" && "📚"}
             {tab === "Төлемдер" && "💳"}
-            {tab === "Статистика" && "📈"}
             {tab}
           </button>
         ))}
-        <div className="mt-auto text-xs text-gray-600 px-3">admin@mathpro.kz</div>
+        <button onClick={() => setIsAuth(false)} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.75rem 1rem", width: "100%", textAlign: "left", background: "transparent", color: "#dc2626", fontWeight: 500, fontSize: "0.875rem", border: "none", cursor: "pointer", marginTop: "1rem" }}>
+          🚪 Шығу
+        </button>
       </aside>
 
       {/* MAIN */}
-      <div className="flex-1 p-8 overflow-auto">
-
-        {/* HEADER */}
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-black">{activeTab}</h1>
-          <div className="flex gap-3">
-            <button className="bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded-lg text-sm font-bold transition">
-              + Курс қосу
-            </button>
-          </div>
+      <div style={{ flex: 1, padding: "2rem", overflow: "auto" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
+          <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f" }}>{activeTab}</h1>
         </div>
 
         {activeTab === "Дашборд" && (
           <>
-            {/* STATS */}
-            <div className="grid grid-cols-4 gap-4 mb-8">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
               {stats.map((s) => (
-                <div key={s.label} className="bg-white/5 border border-white/10 rounded-2xl p-5">
-                  <div className="text-2xl mb-2">{s.icon}</div>
-                  <div className={`text-3xl font-black ${s.color}`}>{s.value}</div>
-                  <div className="text-gray-400 text-sm mt-1">{s.label}</div>
+                <div key={s.label} style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem" }}>
+                  <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{s.icon}</div>
+                  <div style={{ fontSize: "1.75rem", fontWeight: 800, color: s.color }}>{s.value}</div>
+                  <div style={{ fontSize: "0.8rem", color: "#6a6f73" }}>{s.label}</div>
                 </div>
               ))}
             </div>
 
-            {/* RECENT PAYMENTS */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
-              <h2 className="font-bold mb-4">Соңғы төлемдер</h2>
-              <table className="w-full text-sm">
+            <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.5rem" }}>
+              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "1rem" }}>Соңғы төлемдер</h2>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
                 <thead>
-                  <tr className="text-gray-400 border-b border-white/10">
-                    <th className="text-left py-2">Оқушы</th>
-                    <th className="text-left py-2">Курс</th>
-                    <th className="text-left py-2">Сома</th>
-                    <th className="text-left py-2">Күні</th>
-                    <th className="text-left py-2">Статус</th>
+                  <tr style={{ borderBottom: "1px solid #d1d7dc" }}>
+                    <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Оқушы</th>
+                    <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Курс</th>
+                    <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Сома</th>
+                    <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Статус</th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    { name: "Аяша Н.", course: "ҰБТ Толық", amount: "40 000 ₸", date: "01.06.2025", status: "Төленді" },
-                    { name: "Дәурен Қ.", course: "Базалық", amount: "25 000 ₸", date: "01.06.2025", status: "Төленді" },
-                    { name: "Жанар Е.", course: "Интенсив", amount: "75 000 ₸", date: "31.05.2025", status: "Төленді" },
+                    { name: "Аяша Н.", course: "ҰБТ Толық", amount: "40 000 ₸", status: "Төленді" },
+                    { name: "Дәурен Қ.", course: "Базалық", amount: "25 000 ₸", status: "Төленді" },
+                    { name: "Жанар Е.", course: "Интенсив", amount: "75 000 ₸", status: "Төленді" },
                   ].map((p, i) => (
-                    <tr key={i} className="border-b border-white/5 hover:bg-white/3">
-                      <td className="py-3">{p.name}</td>
-                      <td className="py-3 text-gray-300">{p.course}</td>
-                      <td className="py-3 text-green-400 font-semibold">{p.amount}</td>
-                      <td className="py-3 text-gray-400">{p.date}</td>
-                      <td className="py-3">
-                        <span className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-full">{p.status}</span>
+                    <tr key={i} style={{ borderBottom: "1px solid #f7f9fa" }}>
+                      <td style={{ padding: "0.75rem 0.625rem", color: "#1c1d1f" }}>{p.name}</td>
+                      <td style={{ padding: "0.75rem 0.625rem", color: "#6a6f73" }}>{p.course}</td>
+                      <td style={{ padding: "0.75rem 0.625rem", color: "#16a34a", fontWeight: 700 }}>{p.amount}</td>
+                      <td style={{ padding: "0.75rem 0.625rem" }}>
+                        <span style={{ background: "#dcfce7", color: "#166534", fontSize: "0.75rem", fontWeight: 600, padding: "0.2rem 0.6rem", borderRadius: "4px" }}>{p.status}</span>
                       </td>
                     </tr>
                   ))}
@@ -107,42 +146,30 @@ export default function AdminPage() {
         )}
 
         {activeTab === "Оқушылар" && (
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-            <div className="flex gap-3 mb-4">
-              <input
-                type="text"
-                placeholder="🔍 Оқушы іздеу..."
-                className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-2 rounded-xl outline-none focus:border-yellow-500 transition text-sm flex-1"
-              />
-              <button className="bg-yellow-500 text-black px-4 py-2 rounded-xl text-sm font-bold">Сүзгі</button>
+          <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.5rem" }}>
+            <div style={{ marginBottom: "1rem" }}>
+              <input type="text" placeholder="🔍 Оқушы іздеу..." style={{ padding: "0.625rem 1rem", border: "1px solid #d1d7dc", borderRadius: "4px", fontSize: "0.875rem", outline: "none", width: "100%", boxSizing: "border-box" }} />
             </div>
-            <table className="w-full text-sm">
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
               <thead>
-                <tr className="text-gray-400 border-b border-white/10">
-                  <th className="text-left py-2">Аты-жөні</th>
-                  <th className="text-left py-2">Email</th>
-                  <th className="text-left py-2">Курс</th>
-                  <th className="text-left py-2">Күні</th>
-                  <th className="text-left py-2">Статус</th>
-                  <th className="text-left py-2">Әрекет</th>
+                <tr style={{ borderBottom: "1px solid #d1d7dc" }}>
+                  <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Аты-жөні</th>
+                  <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Email</th>
+                  <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Курс</th>
+                  <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Статус</th>
+                  <th style={{ textAlign: "left", padding: "0.625rem", color: "#6a6f73", fontWeight: 600 }}>Күні</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((u, i) => (
-                  <tr key={i} className="border-b border-white/5 hover:bg-white/3">
-                    <td className="py-3 font-semibold">{u.name}</td>
-                    <td className="py-3 text-gray-400">{u.email}</td>
-                    <td className="py-3 text-blue-300">{u.course}</td>
-                    <td className="py-3 text-gray-400">{u.date}</td>
-                    <td className="py-3">
-                      <span className={`text-xs px-2 py-1 rounded-full ${u.status === "Белсенді" ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
-                        {u.status}
-                      </span>
+                  <tr key={i} style={{ borderBottom: "1px solid #f7f9fa" }}>
+                    <td style={{ padding: "0.75rem 0.625rem", fontWeight: 600, color: "#1c1d1f" }}>{u.name}</td>
+                    <td style={{ padding: "0.75rem 0.625rem", color: "#6a6f73" }}>{u.email}</td>
+                    <td style={{ padding: "0.75rem 0.625rem", color: "#5624d0" }}>{u.course}</td>
+                    <td style={{ padding: "0.75rem 0.625rem" }}>
+                      <span style={{ background: u.status === "Белсенді" ? "#dcfce7" : "#fee2e2", color: u.status === "Белсенді" ? "#166534" : "#dc2626", fontSize: "0.75rem", fontWeight: 600, padding: "0.2rem 0.6rem", borderRadius: "4px" }}>{u.status}</span>
                     </td>
-                    <td className="py-3">
-                      <button className="text-yellow-400 text-xs hover:underline mr-3">Өңдеу</button>
-                      <button className="text-red-400 text-xs hover:underline">Өшіру</button>
-                    </td>
+                    <td style={{ padding: "0.75rem 0.625rem", color: "#6a6f73" }}>{u.date}</td>
                   </tr>
                 ))}
               </tbody>
@@ -151,36 +178,30 @@ export default function AdminPage() {
         )}
 
         {activeTab === "Курстар" && (
-          <div className="grid grid-cols-3 gap-4">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "1rem" }}>
             {[
-              { title: "Математика негіздері", students: 342, price: "25 000 ₸", status: "Белсенді" },
-              { title: "ҰБТ Толық дайындық", students: 687, price: "40 000 ₸", status: "Белсенді" },
-              { title: "ҰБТ Экспресс", students: 219, price: "75 000 ₸", status: "Белсенді" },
+              { title: "Математика негіздері", students: 342, price: "25 000 ₸" },
+              { title: "ҰБТ Толық дайындық", students: 687, price: "40 000 ₸" },
+              { title: "ҰБТ Экспресс", students: 219, price: "75 000 ₸" },
             ].map((c, i) => (
-              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                <div className="text-4xl mb-3">📚</div>
-                <h3 className="font-bold mb-1">{c.title}</h3>
-                <div className="text-gray-400 text-sm mb-3">{c.students} оқушы</div>
-                <div className="text-yellow-400 font-black text-xl mb-4">{c.price}</div>
-                <div className="flex gap-2">
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-500 py-2 rounded-lg text-xs font-semibold transition">Өңдеу</button>
-                  <button className="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-lg text-xs font-semibold transition">Көру</button>
-                </div>
+              <div key={i} style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.5rem" }}>
+                <div style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>📚</div>
+                <h3 style={{ fontWeight: 700, color: "#1c1d1f", marginBottom: "0.375rem" }}>{c.title}</h3>
+                <div style={{ color: "#6a6f73", fontSize: "0.875rem", marginBottom: "0.75rem" }}>{c.students} оқушы</div>
+                <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "#5624d0", marginBottom: "1rem" }}>{c.price}</div>
+                <button style={{ background: "#5624d0", color: "white", padding: "0.5rem 1rem", borderRadius: "4px", fontSize: "0.875rem", fontWeight: 600, border: "none", cursor: "pointer", width: "100%" }}>Өңдеу</button>
               </div>
             ))}
           </div>
         )}
 
-        {(activeTab === "Төлемдер" || activeTab === "Статистика") && (
-          <div className="flex items-center justify-center h-64 text-gray-500">
-            <div className="text-center">
-              <div className="text-5xl mb-4">🚧</div>
-              <div className="text-lg font-semibold">Жақында қосылады</div>
-            </div>
+        {activeTab === "Төлемдер" && (
+          <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "3rem", textAlign: "center" }}>
+            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🚧</div>
+            <div style={{ fontSize: "1.1rem", fontWeight: 600, color: "#6a6f73" }}>Жақында қосылады</div>
           </div>
         )}
-
       </div>
     </main>
-  );
-}
+  )
+} 
