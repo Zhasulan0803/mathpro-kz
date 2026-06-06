@@ -24,73 +24,78 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-white text-gray-900">
+    <main className="min-h-screen text-white" style={{background: "linear-gradient(135deg, #0f0c29, #302b63, #24243e)"}}>
 
       {/* NAVBAR */}
-      <nav className="flex items-center justify-between px-4 md:px-12 py-4 border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur z-50">
-        <div className="text-xl font-black text-blue-600">IQ<span className="text-gray-900"> Math</span></div>
-        <div className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-          <a href="#courses" className="hover:text-blue-600 transition">Курстар</a>
-          <a href="#teacher" className="hover:text-blue-600 transition">Мұғалім</a>
-          <a href="#reviews" className="hover:text-blue-600 transition">Пікірлер</a>
-          <a href="#faq" className="hover:text-blue-600 transition">FAQ</a>
+      <nav className="flex items-center justify-between px-4 md:px-12 py-4 sticky top-0 z-50" style={{background: "rgba(255,255,255,0.05)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.1)"}}>
+        <div className="text-xl font-black">
+          <span style={{color: "#a78bfa"}}>IQ</span>
+          <span className="text-white"> Math</span>
+        </div>
+        <div className="hidden md:flex gap-8 text-sm font-medium text-white/70">
+          <a href="#courses" className="hover:text-white transition">Курстар</a>
+          <a href="#teacher" className="hover:text-white transition">Мұғалім</a>
+          <a href="#reviews" className="hover:text-white transition">Пікірлер</a>
+          <a href="#faq" className="hover:text-white transition">FAQ</a>
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:bg-blue-700 transition">
+          <Link href="/login" className="px-4 py-2 rounded-xl font-semibold text-sm transition" style={{background: "rgba(167,139,250,0.2)", border: "1px solid rgba(167,139,250,0.4)", color: "#a78bfa"}}>
             Кіру
           </Link>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-gray-700 text-2xl">
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white text-2xl">
             {menuOpen ? "✕" : "☰"}
           </button>
         </div>
         {menuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white border-b border-gray-100 flex flex-col gap-4 px-6 py-4 md:hidden shadow-lg">
-            <a href="#courses" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-blue-600">Курстар</a>
-            <a href="#teacher" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-blue-600">Мұғалім</a>
-            <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-blue-600">Пікірлер</a>
-            <a href="#faq" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-blue-600">FAQ</a>
+          <div className="absolute top-full left-0 right-0 flex flex-col gap-4 px-6 py-4 md:hidden" style={{background: "rgba(15,12,41,0.95)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.1)"}}>
+            <a href="#courses" onClick={() => setMenuOpen(false)} className="text-white/70 hover:text-white">Курстар</a>
+            <a href="#teacher" onClick={() => setMenuOpen(false)} className="text-white/70 hover:text-white">Мұғалім</a>
+            <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-white/70 hover:text-white">Пікірлер</a>
+            <a href="#faq" onClick={() => setMenuOpen(false)} className="text-white/70 hover:text-white">FAQ</a>
           </div>
         )}
       </nav>
 
       {/* HERO */}
-      <section className="text-center py-20 md:py-32 px-4 bg-gradient-to-b from-blue-50 to-white">
-        <div className="inline-block bg-blue-100 text-blue-600 text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest">
-          ҰБТ 2025 · МАТЕМАТИКА
-        </div>
-        <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight text-gray-900">
-          ҰБТ-да математикадан <br />
-          <span className="text-blue-600">100 балл</span> алыңыз
-        </h1>
-        <p className="text-gray-500 text-base md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-          Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз. Нақты әдіс, нәтижелі сабақтар.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/login" className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-            Курсты бастау →
-          </Link>
-          <a href="#form" className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-50 transition">
-            Тегін сабақ
-          </a>
-        </div>
+      <section className="text-center py-20 md:py-32 px-4 relative overflow-hidden">
+        <div className="absolute top-20 left-10 w-72 h-72 rounded-full opacity-20 blur-3xl" style={{background: "#7c3aed"}}></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full opacity-20 blur-3xl" style={{background: "#2563eb"}}></div>
+        
+        <div className="relative z-10">
+          <div className="inline-block text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest" style={{background: "rgba(167,139,250,0.15)", border: "1px solid rgba(167,139,250,0.3)", color: "#a78bfa"}}>
+            ҰБТ 2025 · МАТЕМАТИКА
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
+            ҰБТ-да математикадан <br />
+            <span style={{background: "linear-gradient(90deg, #a78bfa, #60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>
+              100 балл
+            </span> алыңыз
+          </h1>
+          <p className="text-white/60 text-base md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+            Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз. Нақты әдіс, нәтижелі сабақтар.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/login" className="px-8 py-4 rounded-2xl font-bold text-lg transition" style={{background: "linear-gradient(135deg, #7c3aed, #2563eb)", boxShadow: "0 0 30px rgba(124,58,237,0.4)"}}>
+              Курсты бастау →
+            </Link>
+            <a href="#form" className="px-8 py-4 rounded-2xl font-bold text-lg transition text-white" style={{background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", backdropFilter: "blur(10px)"}}>
+              Тегін сабақ
+            </a>
+          </div>
 
-        {/* STATS */}
-        <div className="flex justify-center gap-8 md:gap-16 mt-16 flex-wrap">
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-black text-blue-600">1200+</div>
-            <div className="text-gray-400 text-sm mt-1">Оқушы</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-black text-blue-600">94%</div>
-            <div className="text-gray-400 text-sm mt-1">Нәтижені жақсартты</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-black text-blue-600">250+</div>
-            <div className="text-gray-400 text-sm mt-1">Видео сабақ</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-black text-blue-600">500+</div>
-            <div className="text-gray-400 text-sm mt-1">ҰБТ тест</div>
+          {/* STATS */}
+          <div className="flex justify-center gap-6 md:gap-12 mt-16 flex-wrap">
+            {[
+              { num: "1200+", label: "Оқушы" },
+              { num: "94%", label: "Нәтиже" },
+              { num: "250+", label: "Видео сабақ" },
+              { num: "500+", label: "ҰБТ тест" },
+            ].map((s) => (
+              <div key={s.label} className="text-center px-6 py-4 rounded-2xl" style={{background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(10px)"}}>
+                <div className="text-3xl font-black" style={{background: "linear-gradient(90deg, #a78bfa, #60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>{s.num}</div>
+                <div className="text-white/50 text-sm mt-1">{s.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -98,70 +103,50 @@ export default function Home() {
       {/* COURSES */}
       <section id="courses" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <div className="text-blue-600 text-sm font-bold tracking-widest mb-2">КУРСТАР</div>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900">Мақсатыңызға сәйкес курс таңдаңыз</h2>
+          <div className="text-sm font-bold tracking-widest mb-2" style={{color: "#a78bfa"}}>КУРСТАР</div>
+          <h2 className="text-3xl md:text-4xl font-black">Мақсатыңызға сәйкес курс таңдаңыз</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="border border-gray-100 rounded-3xl p-6 hover:shadow-xl hover:border-blue-100 transition">
-            <div className="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full inline-block mb-4">Базалық</div>
-            <h3 className="text-xl font-black mb-2 text-gray-900">Математика негіздері</h3>
-            <p className="text-gray-400 text-sm mb-4 leading-relaxed">Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.</p>
-            <div className="flex gap-4 text-xs text-gray-400 mb-6">
-              <span>📹 45 сабақ</span><span>⏱ 3 ай</span>
+          {[
+            { tag: "Базалық", title: "Математика негіздері", desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.", lessons: "45 сабақ", duration: "3 ай", price: "25 000 ₸", hot: false },
+            { tag: "Орта деңгей", title: "ҰБТ Толық дайындық", desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.", lessons: "90 сабақ", duration: "6 ай", price: "40 000 ₸", hot: true },
+            { tag: "Интенсив", title: "ҰБТ Экспресс: 100 балл", desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.", lessons: "120 сабақ", duration: "Ментор", price: "75 000 ₸", hot: false },
+          ].map((c) => (
+            <div key={c.title} className="relative rounded-3xl p-6 transition" style={{background: "rgba(255,255,255,0.05)", border: c.hot ? "1px solid rgba(167,139,250,0.5)" : "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(20px)", boxShadow: c.hot ? "0 0 30px rgba(124,58,237,0.2)" : "none"}}>
+              {c.hot && <div className="absolute -top-3 right-4 text-xs font-bold px-3 py-1 rounded-full" style={{background: "linear-gradient(135deg, #7c3aed, #2563eb)"}}>⭐ Хит</div>}
+              <div className="text-xs font-bold px-3 py-1 rounded-full inline-block mb-4" style={{background: "rgba(167,139,250,0.15)", color: "#a78bfa"}}>{c.tag}</div>
+              <h3 className="text-xl font-black mb-2">{c.title}</h3>
+              <p className="text-white/50 text-sm mb-4 leading-relaxed">{c.desc}</p>
+              <div className="flex gap-4 text-xs text-white/40 mb-6">
+                <span>📹 {c.lessons}</span>
+                <span>⏱ {c.duration}</span>
+              </div>
+              <div className="flex items-center justify-between pt-4" style={{borderTop: "1px solid rgba(255,255,255,0.1)"}}>
+                <div className="text-2xl font-black" style={{color: c.hot ? "#a78bfa" : "white"}}>{c.price}<span className="text-sm text-white/40 font-normal">/ай</span></div>
+                <Link href="/login" className="px-4 py-2 rounded-xl text-sm font-semibold transition" style={{background: c.hot ? "linear-gradient(135deg, #7c3aed, #2563eb)" : "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)"}}>Сатып алу</Link>
+              </div>
             </div>
-            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <div className="text-2xl font-black text-gray-900">25 000 ₸<span className="text-sm text-gray-400 font-normal">/ай</span></div>
-              <Link href="/login" className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Сатып алу</Link>
-            </div>
-          </div>
-
-          <div className="border-2 border-blue-600 rounded-3xl p-6 relative shadow-xl shadow-blue-100">
-            <div className="absolute -top-3 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">⭐ Хит</div>
-            <div className="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full inline-block mb-4">Орта деңгей</div>
-            <h3 className="text-xl font-black mb-2 text-gray-900">ҰБТ Толық дайындық</h3>
-            <p className="text-gray-400 text-sm mb-4 leading-relaxed">ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.</p>
-            <div className="flex gap-4 text-xs text-gray-400 mb-6">
-              <span>📹 90 сабақ</span><span>⏱ 6 ай</span>
-            </div>
-            <div className="flex items-center justify-between pt-4 border-t border-blue-100">
-              <div className="text-2xl font-black text-blue-600">40 000 ₸<span className="text-sm text-gray-400 font-normal">/ай</span></div>
-              <Link href="/login" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Сатып алу</Link>
-            </div>
-          </div>
-
-          <div className="border border-gray-100 rounded-3xl p-6 hover:shadow-xl hover:border-blue-100 transition">
-            <div className="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full inline-block mb-4">Интенсив</div>
-            <h3 className="text-xl font-black mb-2 text-gray-900">ҰБТ Экспресс: 100 балл</h3>
-            <p className="text-gray-400 text-sm mb-4 leading-relaxed">Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.</p>
-            <div className="flex gap-4 text-xs text-gray-400 mb-6">
-              <span>📹 120 сабақ</span><span>🎯 Ментор</span>
-            </div>
-            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <div className="text-2xl font-black text-gray-900">75 000 ₸<span className="text-sm text-gray-400 font-normal">/ай</span></div>
-              <Link href="/login" className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Сатып алу</Link>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* МҰҒАЛІМ */}
       <section id="teacher" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
-        <div className="bg-blue-50 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
-          <div className="w-28 h-28 md:w-40 md:h-40 rounded-3xl bg-blue-600 flex items-center justify-center text-4xl md:text-5xl font-black text-white flex-shrink-0">
+        <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center" style={{background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(20px)"}}>
+          <div className="w-28 h-28 md:w-40 md:h-40 rounded-3xl flex items-center justify-center text-4xl font-black flex-shrink-0" style={{background: "linear-gradient(135deg, #7c3aed, #2563eb)"}}>
             ЖӨ
           </div>
           <div className="text-center md:text-left">
-            <div className="text-blue-600 text-sm font-bold tracking-widest mb-1">МҰҒАЛІМ</div>
-            <h2 className="text-2xl md:text-3xl font-black mb-1 text-gray-900">Өміртай Жасұлан</h2>
-            <div className="text-blue-600 text-sm mb-4 font-medium">Математика мұғалімі · ҰБТ сарапшысы</div>
-            <p className="text-gray-500 mb-6 leading-relaxed text-sm md:text-base">
+            <div className="text-sm font-bold tracking-widest mb-1" style={{color: "#a78bfa"}}>МҰҒАЛІМ</div>
+            <h2 className="text-2xl md:text-3xl font-black mb-1">Өміртай Жасұлан</h2>
+            <div className="text-sm mb-4 font-medium" style={{color: "#a78bfa"}}>Математика мұғалімі · ҰБТ сарапшысы</div>
+            <p className="text-white/60 mb-6 leading-relaxed text-sm md:text-base">
               10 жылдан астам тәжірибе. 500+ оқушы ҰБТ-да 90+ балл алды. Авторлық әдіс бойынша оқытады.
             </p>
             <div className="flex gap-2 flex-wrap justify-center md:justify-start">
-              <span className="bg-white border border-blue-100 text-blue-600 text-xs px-3 py-1.5 rounded-full font-medium">🏆 ҰБТ сарапшысы</span>
-              <span className="bg-white border border-blue-100 text-blue-600 text-xs px-3 py-1.5 rounded-full font-medium">📚 10+ жыл</span>
-              <span className="bg-white border border-blue-100 text-blue-600 text-xs px-3 py-1.5 rounded-full font-medium">👨‍🎓 500+ оқушы</span>
-              <span className="bg-white border border-blue-100 text-blue-600 text-xs px-3 py-1.5 rounded-full font-medium">⭐ 4.9 рейтинг</span>
+              {["🏆 ҰБТ сарапшысы", "📚 10+ жыл", "👨‍🎓 500+ оқушы", "⭐ 4.9 рейтинг"].map((b) => (
+                <span key={b} className="text-xs px-3 py-1.5 rounded-full font-medium" style={{background: "rgba(167,139,250,0.15)", border: "1px solid rgba(167,139,250,0.3)", color: "#a78bfa"}}>{b}</span>
+              ))}
             </div>
           </div>
         </div>
@@ -170,23 +155,23 @@ export default function Home() {
       {/* ПІКІРЛЕР */}
       <section id="reviews" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <div className="text-blue-600 text-sm font-bold tracking-widest mb-2">ПІКІРЛЕР</div>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900">Оқушылар не дейді?</h2>
+          <div className="text-sm font-bold tracking-widest mb-2" style={{color: "#a78bfa"}}>ПІКІРЛЕР</div>
+          <h2 className="text-3xl md:text-4xl font-black">Оқушылар не дейді?</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { name: "Аяша Нұрланова", score: "96 балл", text: "ҰБТ-да математикадан 96 балл алдым! Жасұлан аға өте түсінікті түсіндіреді.", avatar: "АН", color: "bg-blue-600" },
-            { name: "Дәурен Қалиев", score: "88 балл", text: "Математикадан қорқатынмын, бірақ курс арқылы бәрі түсінді болды.", avatar: "ДҚ", color: "bg-indigo-600" },
-            { name: "Жанар Ерланқызы", score: "91 балл", text: "Тест жүйесі керемет! Қатені бірден көрсетіп, түсіндіреді.", avatar: "ЖЕ", color: "bg-sky-600" },
+            { name: "Аяша Нұрланова", score: "96 балл", text: "ҰБТ-да математикадан 96 балл алдым! Жасұлан аға өте түсінікті түсіндіреді.", avatar: "АН" },
+            { name: "Дәурен Қалиев", score: "88 балл", text: "Математикадан қорқатынмын, бірақ курс арқылы бәрі түсінді болды.", avatar: "ДҚ" },
+            { name: "Жанар Ерланқызы", score: "91 балл", text: "Тест жүйесі керемет! Қатені бірден көрсетіп, түсіндіреді.", avatar: "ЖЕ" },
           ].map((r) => (
-            <div key={r.name} className="border border-gray-100 rounded-3xl p-6 hover:shadow-lg transition">
+            <div key={r.name} className="rounded-3xl p-6" style={{background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(20px)"}}>
               <div className="text-yellow-400 text-lg mb-3">★★★★★</div>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">"{r.text}"</p>
+              <p className="text-white/70 text-sm leading-relaxed mb-4">"{r.text}"</p>
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full ${r.color} flex items-center justify-center text-xs font-bold text-white`}>{r.avatar}</div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold" style={{background: "linear-gradient(135deg, #7c3aed, #2563eb)"}}>{r.avatar}</div>
                 <div>
-                  <div className="font-bold text-sm text-gray-900">{r.name}</div>
-                  <div className="text-blue-600 text-xs font-medium">ҰБТ: {r.score}</div>
+                  <div className="font-bold text-sm">{r.name}</div>
+                  <div className="text-xs font-medium" style={{color: "#a78bfa"}}>ҰБТ: {r.score}</div>
                 </div>
               </div>
             </div>
@@ -196,49 +181,55 @@ export default function Home() {
 
       {/* ТІРКЕЛУ ФОРМАСЫ */}
       <section id="form" className="py-20 px-4 md:px-8 max-w-2xl mx-auto text-center">
-        <div className="bg-blue-600 rounded-3xl p-8 md:p-12 text-white">
-          <div className="text-blue-200 text-sm font-bold tracking-widest mb-2">ТЕГІН</div>
-          <h2 className="text-2xl md:text-3xl font-black mb-3">Алғашқы сабаққа тіркелу</h2>
-          <p className="text-blue-100 mb-8 text-sm md:text-base">Аты-жөніңіз бен телефоныңызды қалдырыңыз</p>
-          {formSent ? (
-            <div className="bg-white/20 text-white px-6 py-4 rounded-2xl text-lg font-semibold">
-              ✅ Сәтті жіберілді! Жақында хабарласамыз.
-            </div>
-          ) : (
-            <>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <input
-                  type="text"
-                  placeholder="Аты-жөніңіз"
-                  value={formName}
-                  onChange={e => setFormName(e.target.value)}
-                  className="w-full sm:w-auto bg-white/20 border border-white/30 text-white placeholder-blue-200 px-4 py-3 rounded-xl outline-none focus:border-white transition"
-                />
-                <input
-                  type="tel"
-                  placeholder="Телефон нөмірі"
-                  value={formPhone}
-                  onChange={e => setFormPhone(e.target.value)}
-                  className="w-full sm:w-auto bg-white/20 border border-white/30 text-white placeholder-blue-200 px-4 py-3 rounded-xl outline-none focus:border-white transition"
-                />
+        <div className="rounded-3xl p-8 md:p-12 relative overflow-hidden" style={{background: "rgba(255,255,255,0.05)", border: "1px solid rgba(167,139,250,0.3)", backdropFilter: "blur(20px)"}}>
+          <div className="absolute top-0 left-0 w-full h-full opacity-10" style={{background: "linear-gradient(135deg, #7c3aed, #2563eb)"}}></div>
+          <div className="relative z-10">
+            <div className="text-sm font-bold tracking-widest mb-2" style={{color: "#a78bfa"}}>ТЕГІН</div>
+            <h2 className="text-2xl md:text-3xl font-black mb-3">Алғашқы сабаққа тіркелу</h2>
+            <p className="text-white/60 mb-8 text-sm md:text-base">Аты-жөніңіз бен телефоныңызды қалдырыңыз</p>
+            {formSent ? (
+              <div className="px-6 py-4 rounded-2xl text-lg font-semibold" style={{background: "rgba(74,222,128,0.2)", border: "1px solid rgba(74,222,128,0.3)", color: "#4ade80"}}>
+                ✅ Сәтті жіберілді! Жақында хабарласамыз.
               </div>
-              <button
-                onClick={handleFormSubmit}
-                disabled={formLoading}
-                className="mt-4 w-full sm:w-auto bg-white hover:bg-blue-50 disabled:opacity-50 text-blue-600 px-8 py-3 rounded-xl font-bold transition"
-              >
-                {formLoading ? "Жіберілуде..." : "Тегін тіркелу →"}
-              </button>
-            </>
-          )}
+            ) : (
+              <>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <input
+                    type="text"
+                    placeholder="Аты-жөніңіз"
+                    value={formName}
+                    onChange={e => setFormName(e.target.value)}
+                    className="w-full sm:w-auto px-4 py-3 rounded-xl outline-none text-white placeholder-white/30"
+                    style={{background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)"}}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Телефон нөмірі"
+                    value={formPhone}
+                    onChange={e => setFormPhone(e.target.value)}
+                    className="w-full sm:w-auto px-4 py-3 rounded-xl outline-none text-white placeholder-white/30"
+                    style={{background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)"}}
+                  />
+                </div>
+                <button
+                  onClick={handleFormSubmit}
+                  disabled={formLoading}
+                  className="mt-4 w-full sm:w-auto px-8 py-3 rounded-xl font-bold transition"
+                  style={{background: "linear-gradient(135deg, #7c3aed, #2563eb)", opacity: formLoading ? 0.5 : 1}}
+                >
+                  {formLoading ? "Жіберілуде..." : "Тегін тіркелу →"}
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
       <section id="faq" className="py-16 px-4 md:px-8 max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <div className="text-blue-600 text-sm font-bold tracking-widest mb-2">FAQ</div>
-          <h2 className="text-2xl md:text-3xl font-black text-gray-900">Жиі қойылатын сұрақтар</h2>
+          <div className="text-sm font-bold tracking-widest mb-2" style={{color: "#a78bfa"}}>FAQ</div>
+          <h2 className="text-2xl md:text-3xl font-black">Жиі қойылатын сұрақтар</h2>
         </div>
         <div className="flex flex-col gap-4">
           {[
@@ -247,22 +238,22 @@ export default function Home() {
             { q: "Тегін сабақ қандай?", a: "Тіркелгеннен кейін алғашқы 3 сабақ тегін." },
             { q: "Нәтиже болмаса ақша қайтарыла ма?", a: "Иә, 14 күн ішінде толық ақша қайтарылады." },
           ].map((f) => (
-            <div key={f.q} className="border border-gray-100 rounded-2xl p-5 hover:border-blue-100 hover:shadow-md transition">
-              <div className="font-bold mb-2 text-gray-900 text-sm md:text-base">{f.q}</div>
-              <div className="text-gray-400 text-sm">{f.a}</div>
+            <div key={f.q} className="rounded-2xl p-5" style={{background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(10px)"}}>
+              <div className="font-bold mb-2 text-sm md:text-base">{f.q}</div>
+              <div className="text-white/50 text-sm">{f.a}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-100 text-center py-8 text-gray-400 text-sm mt-10 px-4">
-        © 2025 <span className="text-blue-600 font-bold">IQ Math</span> · Барлық құқықтар қорғалған
+      <footer className="text-center py-8 text-white/30 text-sm mt-10 px-4" style={{borderTop: "1px solid rgba(255,255,255,0.1)"}}>
+        © 2025 <span style={{color: "#a78bfa"}} className="font-bold">IQ Math</span> · Барлық құқықтар қорғалған
         <div className="flex justify-center gap-4 md:gap-6 mt-3 flex-wrap">
-          <Link href="/login" className="hover:text-blue-600 transition">Кіру</Link>
-          <Link href="/dashboard" className="hover:text-blue-600 transition">Дашборд</Link>
-          <Link href="/tests" className="hover:text-blue-600 transition">Тесттер</Link>
-          <Link href="/admin" className="hover:text-blue-600 transition">Админ</Link>
+          <Link href="/login" className="hover:text-white transition">Кіру</Link>
+          <Link href="/dashboard" className="hover:text-white transition">Дашборд</Link>
+          <Link href="/tests" className="hover:text-white transition">Тесттер</Link>
+          <Link href="/admin" className="hover:text-white transition">Админ</Link>
         </div>
       </footer>
 
