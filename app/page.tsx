@@ -44,14 +44,14 @@ export default function Home() {
 
       <section style={{ textAlign: "center", padding: "8rem 1rem", position: "relative" }}>
         <div style={{ display: "inline-block", background: "rgba(79,70,229,0.1)", color: "#4f46e5", padding: "0.5rem 1rem", borderRadius: "100px", fontSize: "0.75rem", fontWeight: 700, marginBottom: "1.5rem", letterSpacing: "3px" }}>
-          ҰБТ 2025 · МАТЕМАТИКА
+          ҰБТ 2027 · МАТЕМАТИКА
         </div>
         <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, marginBottom: "1.5rem", lineHeight: 1.2, color: "#1e1b4b" }}>
           ҰБТ-да математикадан <br />
-          <span style={{ color: "#4f46e5" }}>100 балл</span> алыңыз
+          <span style={{ color: "#4f46e5" }}>+50 балл</span> алыңыз
         </h1>
         <p style={{ color: "#6b7280", fontSize: "1.1rem", marginBottom: "2.5rem", maxWidth: "600px", margin: "0 auto 2.5rem" }}>
-          Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз. Нақты әдіс, нәтижелі сабақтар.
+           Жасұлан ағаймен бірге ҰБТ-ға дайындалыңыз. Нақты әдіс, нәтижелі сабақтар.
         </p>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
           <a href="#courses" style={{ background: "#4f46e5", color: "white", padding: "1rem 2rem", borderRadius: "1rem", fontWeight: 700, fontSize: "1.1rem", textDecoration: "none", boxShadow: "0 8px 30px rgba(79,70,229,0.3)" }}>
@@ -200,4 +200,4 @@ export default function Home() {
 
     </main>
   )
-} 
+}  
