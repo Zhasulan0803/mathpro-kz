@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 
 export default function Home() {
@@ -8,6 +8,18 @@ export default function Home() {
   const [formLoading, setFormLoading] = useState(false)
   const [formSent, setFormSent] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user")
+    if (userData) setUser(JSON.parse(userData))
+  }, [])
+
+  function handleLogout() {
+    localStorage.removeItem("user")
+    localStorage.removeItem("purchased")
+    setUser(null)
+  }
 
   async function handleFormSubmit() {
     if (!formName || !formPhone) return
@@ -24,42 +36,9 @@ export default function Home() {
   }
 
   const courses = [
-    {
-      id: 1,
-      tag: "Базалық",
-      title: "Математика негіздері",
-      desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.",
-      price: "25 000",
-      rating: "4.7",
-      students: "342",
-      hot: false,
-      lessons: "45 сабақ",
-      duration: "3 ай",
-    },
-    {
-      id: 2,
-      tag: "Орта деңгей",
-      title: "ҰБТ Толық дайындық",
-      desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.",
-      price: "40 000",
-      rating: "4.9",
-      students: "687",
-      hot: true,
-      lessons: "90 сабақ",
-      duration: "6 ай",
-    },
-    {
-      id: 3,
-      tag: "Интенсив",
-      title: "ҰБТ Экспресс: 100 балл",
-      desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.",
-      price: "75 000",
-      rating: "4.8",
-      students: "219",
-      hot: false,
-      lessons: "120 сабақ",
-      duration: "Ментор",
-    },
+    { id: 1, tag: "Базалық", title: "Математика негіздері", desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.", price: "25 000", rating: "4.7", students: "342", hot: false },
+    { id: 2, tag: "Орта деңгей", title: "ҰБТ Толық дайындық", desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.", price: "40 000", rating: "4.9", students: "687", hot: true },
+    { id: 3, tag: "Интенсив", title: "ҰБТ Экспресс: 100 балл", desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.", price: "75 000", rating: "4.8", students: "219", hot: false },
   ]
 
   return (
@@ -69,8 +48,25 @@ export default function Home() {
       <nav style={{ background: "white", borderBottom: "1px solid #d1d7dc", padding: "0 1rem", height: "64px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "#5624d0" }}>IQ Math</div>
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-          <Link href="/login" style={{ border: "1px solid #1c1d1f", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", color: "#1c1d1f" }}>Кіру</Link>
-          <Link href="/login" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>Тіркелу</Link>
+          {user ? (
+            <>
+              <Link href="/dashboard" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>
+                Дашборд
+              </Link>
+              <div
+                onClick={handleLogout}
+                title="Шығу"
+                style={{ width: "34px", height: "34px", borderRadius: "50%", background: "#5624d0", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer" }}
+              >
+                {user.name?.[0]?.toUpperCase()}
+              </div>
+            </>
+          ) : (
+            <>
+              <Link href="/login" style={{ border: "1px solid #1c1d1f", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", color: "#1c1d1f" }}>Кіру</Link>
+              <Link href="/login" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>Тіркелу</Link>
+            </>
+          )}
           <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", fontSize: "1.5rem", cursor: "pointer", color: "#1c1d1f", padding: "0.25rem" }}>
             {menuOpen ? "✕" : "☰"}
           </button>
@@ -81,6 +77,11 @@ export default function Home() {
             <a href="#teacher" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>Мұғалім</a>
             <a href="#reviews" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>Пікірлер</a>
             <a href="#faq" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>FAQ</a>
+            {user && (
+              <button onClick={handleLogout} style={{ background: "none", border: "none", color: "#dc2626", fontWeight: 600, cursor: "pointer", textAlign: "left", fontSize: "1rem", padding: 0 }}>
+                Шығу
+              </button>
+            )}
           </div>
         )}
       </nav>
