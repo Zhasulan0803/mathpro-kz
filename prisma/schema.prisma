@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String?
+  role      Role     @default(STUDENT)
+  image     String?
+  createdAt DateTime @default(now())
+
+  enrollments Enrollment[]
+  testResults TestResult[]
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Int
+  level       String
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  enrollments Enrollment[]
+  tests       Test[]
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+}
+
+model Test {
+  id       String  @id @default(cuid())
+  title    String
+  courseId String?
+  course   Course? @relation(fields: [courseId], references: [id])
+
+  questions Question[]
+  results   TestResult[]
+}
+
+model Question {
+  id      String   @id @default(cuid())
+  text    String
+  options String[]
+  correct Int
+  testId  String
+  test    Test     @relation(fields: [testId], references: [id])
+}
+
+model TestResult {
+  id        String   @id @default(cuid())
+  userId    String
+  testId    String
+  score     Int
+  total     Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  test Test @relation(fields: [testId], references: [id])
+} 
