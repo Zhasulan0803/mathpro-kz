@@ -1,102 +1,105 @@
+import Link from "next/link"
+
 export default function Dashboard() {
   return (
-    <main className="min-h-screen bg-[#0A1628] text-white flex">
+    <main style={{ minHeight: "100vh", background: "#f7f9fa", fontFamily: "Inter, sans-serif" }}>
 
-      {/* SIDEBAR */}
-      <aside className="w-56 border-r border-white/10 p-5 flex flex-col gap-1">
-        <div className="text-lg font-black mb-6">⭐ MathPro</div>
-        {[
-          { icon: "📊", label: "Дашборд", active: true },
-          { icon: "🎬", label: "Сабақтар", active: false },
-          { icon: "📝", label: "Тесттер", active: false },
-          { icon: "📁", label: "Материалдар", active: false },
-          { icon: "🏆", label: "Рейтинг", active: false },
-          { icon: "📜", label: "Сертификаттар", active: false },
-        ].map((item) => (
-          <div key={item.label} className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-sm transition ${item.active ? "bg-yellow-500/10 text-yellow-400" : "text-gray-400 hover:bg-white/5"}`}>
-            <span>{item.icon}</span>
-            <span>{item.label}</span>
+      {/* NAVBAR */}
+      <nav style={{ background: "white", borderBottom: "1px solid #d1d7dc", padding: "0 2rem", height: "64px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Link href="/" style={{ fontSize: "1.5rem", fontWeight: 700, color: "#5624d0", textDecoration: "none" }}>IQ Math</Link>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <span style={{ fontSize: "0.875rem", color: "#6a6f73" }}>Сәлем, Жасұлан!</span>
+          <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#5624d0", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.875rem" }}>Ж</div>
+        </div>
+      </nav>
+
+      <div style={{ display: "flex", maxWidth: "1200px", margin: "0 auto", padding: "2rem", gap: "2rem" }}>
+
+        {/* SIDEBAR */}
+        <aside style={{ width: "220px", flexShrink: 0 }}>
+          <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", overflow: "hidden" }}>
+            {[
+              { icon: "📊", label: "Дашборд", active: true, href: "/dashboard" },
+              { icon: "🎬", label: "Сабақтар", active: false, href: "/dashboard" },
+              { icon: "📝", label: "Тесттер", active: false, href: "/tests" },
+              { icon: "📁", label: "Материалдар", active: false, href: "/dashboard" },
+              { icon: "🏆", label: "Рейтинг", active: false, href: "/dashboard" },
+              { icon: "📜", label: "Сертификаттар", active: false, href: "/dashboard" },
+            ].map((item) => (
+              <Link key={item.label} href={item.href} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.875rem 1rem", textDecoration: "none", background: item.active ? "#f7f9fa" : "white", borderLeft: item.active ? "3px solid #5624d0" : "3px solid transparent", color: item.active ? "#5624d0" : "#1c1d1f", fontWeight: item.active ? 700 : 400, fontSize: "0.9rem", borderBottom: "1px solid #f7f9fa" }}>
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
           </div>
-        ))}
-        <div className="mt-auto flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-sm text-gray-400 hover:bg-white/5">
-          <span>⚙️</span><span>Параметрлер</span>
-        </div>
-      </aside>
+        </aside>
 
-      {/* MAIN */}
-      <div className="flex-1 p-8">
-        
-        {/* HEADER */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-black">Сәлем, Жасулан! 👋</h1>
-            <p className="text-gray-400 text-sm">Бүгін 2 жаңа сабақ бар</p>
+        {/* MAIN */}
+        <div style={{ flex: 1 }}>
+
+          {/* STATS */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "1.5rem" }}>
+            {[
+              { icon: "🎬", label: "Өткен сабақ", value: "47" },
+              { icon: "📝", label: "Тест тапсырды", value: "23" },
+              { icon: "🏆", label: "Рейтинг орны", value: "#12" },
+            ].map((s) => (
+              <div key={s.label} style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem" }}>
+                <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{s.icon}</div>
+                <div style={{ fontSize: "2rem", fontWeight: 800, color: "#5624d0" }}>{s.value}</div>
+                <div style={{ fontSize: "0.875rem", color: "#6a6f73" }}>{s.label}</div>
+              </div>
+            ))}
           </div>
-          <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center font-bold text-black">Ж</div>
-        </div>
 
-        {/* STATS */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          {[
-            { label: "Өткен сабақ", value: "47", icon: "🎬" },
-            { label: "Тест тапсырды", value: "23", icon: "📝" },
-            { label: "Рейтинг орны", value: "#12", icon: "🏆" },
-          ].map((s) => (
-            <div key={s.label} className="bg-white/5 border border-white/10 rounded-2xl p-5">
-              <div className="text-2xl mb-1">{s.icon}</div>
-              <div className="text-3xl font-black text-yellow-400">{s.value}</div>
-              <div className="text-gray-400 text-sm">{s.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* PROGRESS */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
-          <h2 className="font-bold mb-4">Прогресс</h2>
-          {[
-            { label: "Жалпы прогресс", value: 72, color: "bg-yellow-500" },
-            { label: "Алгебра", value: 85, color: "bg-blue-500" },
-            { label: "Геометрия", value: 60, color: "bg-green-500" },
-            { label: "Тригонометрия", value: 45, color: "bg-purple-500" },
-          ].map((p) => (
-            <div key={p.label} className="mb-4">
-              <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-300">{p.label}</span>
-                <span className="text-yellow-400 font-semibold">{p.value}%</span>
-              </div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div className={`h-full ${p.color} rounded-full`} style={{ width: `${p.value}%` }}></div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* LAST LESSONS */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-          <h2 className="font-bold mb-4">Соңғы сабақтар</h2>
-          {[
-            { title: "Квадрат теңдеулер", time: "Бүгін, 14:00", done: true },
-            { title: "Тригонометриялық функциялар", time: "Кеше, 16:30", done: true },
-            { title: "Логарифм негіздері", time: "Ертең, 10:00", done: false },
-          ].map((l) => (
-            <div key={l.title} className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
-              <div className="flex items-center gap-3">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${l.done ? "bg-green-500/20 text-green-400" : "bg-yellow-500/20 text-yellow-400"}`}>
-                  {l.done ? "✓" : "▶"}
+          {/* PROGRESS */}
+          <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1.5rem" }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "1.25rem" }}>Прогресс</h2>
+            {[
+              { label: "Жалпы прогресс", value: 72, color: "#5624d0" },
+              { label: "Алгебра", value: 85, color: "#a435f0" },
+              { label: "Геометрия", value: 60, color: "#5624d0" },
+              { label: "Тригонометрия", value: 45, color: "#a435f0" },
+            ].map((p) => (
+              <div key={p.label} style={{ marginBottom: "1rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.875rem", marginBottom: "0.375rem" }}>
+                  <span style={{ color: "#1c1d1f", fontWeight: 500 }}>{p.label}</span>
+                  <span style={{ color: "#5624d0", fontWeight: 700 }}>{p.value}%</span>
                 </div>
-                <div>
-                  <div className="text-sm font-semibold">{l.title}</div>
-                  <div className="text-xs text-gray-400">{l.time}</div>
+                <div style={{ height: "8px", background: "#f7f9fa", borderRadius: "4px", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: p.value + "%", background: p.color, borderRadius: "4px" }}></div>
                 </div>
               </div>
-              <button className="text-xs text-yellow-400 hover:underline">
-                {l.done ? "Қайта көру" : "Бастау →"}
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
+          {/* LAST LESSONS */}
+          <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.5rem" }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "1.25rem" }}>Соңғы сабақтар</h2>
+            {[
+              { title: "Квадрат теңдеулер", time: "Бүгін, 14:00", done: true },
+              { title: "Тригонометриялық функциялар", time: "Кеше, 16:30", done: true },
+              { title: "Логарифм негіздері", time: "Ертең, 10:00", done: false },
+            ].map((l) => (
+              <div key={l.title} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.875rem 0", borderBottom: "1px solid #f7f9fa" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <div style={{ width: "36px", height: "36px", borderRadius: "4px", background: l.done ? "#e0f5e9" : "#f0e6ff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}>
+                    {l.done ? "✓" : "▶"}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "#1c1d1f" }}>{l.title}</div>
+                    <div style={{ fontSize: "0.75rem", color: "#6a6f73" }}>{l.time}</div>
+                  </div>
+                </div>
+                <button style={{ background: "none", border: "1px solid #5624d0", color: "#5624d0", padding: "0.375rem 0.875rem", borderRadius: "4px", fontSize: "0.8rem", fontWeight: 600, cursor: "pointer" }}>
+                  {l.done ? "Қайта көру" : "Бастау"}
+                </button>
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
     </main>
-  );
-}
+  )
+} 
