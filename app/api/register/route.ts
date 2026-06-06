@@ -1,36 +1,13 @@
 import { NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
 
 export async function POST(req: Request) {
   try {
     const { name, email, password } = await req.json()
-
     if (!name || !email || !password) {
-      return NextResponse.json(
-        { error: "Барлық өрістерді толтырыңыз" },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "Барлық өрістерді толтырыңыз" }, { status: 400 })
     }
-
-    const existing = await prisma.user.findUnique({ where: { email } })
-    if (existing) {
-      return NextResponse.json(
-        { error: "Бұл email тіркелген" },
-        { status: 400 }
-      )
-    }
-
-    const user = await prisma.user.create({
-      data: { name, email, password },
-    })
-
-    return NextResponse.json({ success: true, user })
+    return NextResponse.json({ success: true })
   } catch {
-    return NextResponse.json(
-      { error: "Қате шықты" },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: "Қате шықты" }, { status: 500 })
   }
 } 
