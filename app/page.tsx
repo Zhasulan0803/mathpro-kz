@@ -7,6 +7,7 @@ export default function Home() {
   const [formPhone, setFormPhone] = useState("")
   const [formLoading, setFormLoading] = useState(false)
   const [formSent, setFormSent] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   async function handleFormSubmit() {
     if (!formName || !formPhone) return
@@ -26,47 +27,64 @@ export default function Home() {
     <main className="min-h-screen bg-[#0A1628] text-white">
 
       {/* NAVBAR */}
-      <nav className="flex items-center justify-between px-8 py-4 border-b border-yellow-500/20">
-        <div className="text-xl font-bold">⭐ MathPro KZ</div>
-        <div className="flex gap-6 text-sm text-gray-300">
+      <nav className="flex items-center justify-between px-4 md:px-8 py-4 border-b border-yellow-500/20 relative">
+        <div className="text-lg md:text-xl font-bold">⭐ MathPro KZ</div>
+        <div className="hidden md:flex gap-6 text-sm text-gray-300">
           <a href="#courses" className="hover:text-yellow-400 transition">Курстар</a>
           <a href="#teacher" className="hover:text-yellow-400 transition">Мұғалім</a>
           <a href="#faq" className="hover:text-yellow-400 transition">FAQ</a>
         </div>
-        <Link href="/login" className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold text-sm hover:bg-yellow-400 transition">
-          Кіру
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/login" className="bg-yellow-500 text-black px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-semibold text-sm hover:bg-yellow-400 transition">
+            Кіру
+          </Link>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-white text-2xl"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+
+        {/* MOBILE MENU */}
+        {menuOpen && (
+          <div className="absolute top-full left-0 right-0 bg-[#0E2A52] border-b border-yellow-500/20 flex flex-col gap-4 px-6 py-4 md:hidden z-50">
+            <a href="#courses" onClick={() => setMenuOpen(false)} className="text-gray-300 hover:text-yellow-400">Курстар</a>
+            <a href="#teacher" onClick={() => setMenuOpen(false)} className="text-gray-300 hover:text-yellow-400">Мұғалім</a>
+            <a href="#faq" onClick={() => setMenuOpen(false)} className="text-gray-300 hover:text-yellow-400">FAQ</a>
+          </div>
+        )}
       </nav>
 
       {/* HERO */}
-      <section className="text-center py-24 px-4">
-        <h1 className="text-5xl font-black mb-6 leading-tight">
+      <section className="text-center py-16 md:py-24 px-4">
+        <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
           ҰБТ математикасынан <br />
           <span className="text-yellow-400">100 балл</span> алыңыз
         </h1>
-        <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
+        <p className="text-gray-300 text-base md:text-lg mb-8 max-w-xl mx-auto">
           Тәжірибелі мұғалімдермен, ҰБТ форматындағы тесттермен нәтижеге жетіңіз
         </p>
-        <div className="flex gap-4 justify-center flex-wrap">
-          <Link href="/login" className="bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-400 transition">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/login" className="bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-400 transition text-center">
             Курсты бастау →
           </Link>
-          <a href="#form" className="border border-white/30 px-8 py-4 rounded-xl font-semibold hover:border-yellow-500 transition">
+          <a href="#form" className="border border-white/30 px-8 py-4 rounded-xl font-semibold hover:border-yellow-500 transition text-center">
             Тегін сабақ
           </a>
         </div>
-        <div className="flex justify-center gap-12 mt-16 flex-wrap">
-          <div><div className="text-4xl font-black text-yellow-400">1200+</div><div className="text-gray-400 text-sm">Оқушы</div></div>
-          <div><div className="text-4xl font-black text-yellow-400">94%</div><div className="text-gray-400 text-sm">Нәтиже</div></div>
-          <div><div className="text-4xl font-black text-yellow-400">250+</div><div className="text-gray-400 text-sm">Видео сабақ</div></div>
+        <div className="flex justify-center gap-8 md:gap-12 mt-12 md:mt-16 flex-wrap">
+          <div><div className="text-3xl md:text-4xl font-black text-yellow-400">1200+</div><div className="text-gray-400 text-sm">Оқушы</div></div>
+          <div><div className="text-3xl md:text-4xl font-black text-yellow-400">94%</div><div className="text-gray-400 text-sm">Нәтиже</div></div>
+          <div><div className="text-3xl md:text-4xl font-black text-yellow-400">250+</div><div className="text-gray-400 text-sm">Видео сабақ</div></div>
         </div>
       </section>
 
       {/* COURSES */}
-      <section id="courses" className="py-20 px-8 max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+      <section id="courses" className="py-16 md:py-20 px-4 md:px-8 max-w-6xl mx-auto">
+        <div className="text-center mb-10">
           <div className="text-yellow-400 text-sm font-semibold tracking-widest mb-2">КУРСТАР</div>
-          <h2 className="text-4xl font-black">Мақсатыңызға сәйкес курс таңдаңыз</h2>
+          <h2 className="text-2xl md:text-4xl font-black">Мақсатыңызға сәйкес курс таңдаңыз</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-yellow-500/50 transition">
@@ -112,15 +130,15 @@ export default function Home() {
       </section>
 
       {/* МҰҒАЛІМ */}
-      <section id="teacher" className="py-20 px-8 max-w-6xl mx-auto">
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-10 flex gap-10 items-center flex-wrap">
-          <div className="w-40 h-40 rounded-2xl bg-blue-900 border-2 border-yellow-500/30 flex items-center justify-center text-5xl font-black text-yellow-400 flex-shrink-0">АС</div>
-          <div>
+      <section id="teacher" className="py-16 md:py-20 px-4 md:px-8 max-w-6xl mx-auto">
+        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+          <div className="w-28 h-28 md:w-40 md:h-40 rounded-2xl bg-blue-900 border-2 border-yellow-500/30 flex items-center justify-center text-4xl md:text-5xl font-black text-yellow-400 flex-shrink-0">АС</div>
+          <div className="text-center md:text-left">
             <div className="text-yellow-400 text-sm font-semibold tracking-widest mb-1">МҰҒАЛІМ</div>
-            <h2 className="text-3xl font-black mb-1">Асылбек Сейткали</h2>
+            <h2 className="text-2xl md:text-3xl font-black mb-1">Асылбек Сейткали</h2>
             <div className="text-yellow-400 text-sm mb-4">Математика мұғалімі · ҰБТ сарапшысы</div>
-            <p className="text-gray-300 mb-6 leading-relaxed">10 жылдан астам тәжірибе. 500+ оқушы ҰБТ-да 90+ балл алды.</p>
-            <div className="flex gap-3 flex-wrap">
+            <p className="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">10 жылдан астам тәжірибе. 500+ оқушы ҰБТ-да 90+ балл алды.</p>
+            <div className="flex gap-2 flex-wrap justify-center md:justify-start">
               <span className="bg-blue-500/20 border border-blue-500/30 text-blue-300 text-xs px-3 py-1 rounded-full">🏆 ҰБТ сарапшысы</span>
               <span className="bg-blue-500/20 border border-blue-500/30 text-blue-300 text-xs px-3 py-1 rounded-full">📚 10+ жыл</span>
               <span className="bg-blue-500/20 border border-blue-500/30 text-blue-300 text-xs px-3 py-1 rounded-full">👨‍🎓 500+ оқушы</span>
@@ -131,10 +149,10 @@ export default function Home() {
       </section>
 
       {/* ПІКІРЛЕР */}
-      <section className="py-20 px-8 max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+      <section className="py-16 md:py-20 px-4 md:px-8 max-w-6xl mx-auto">
+        <div className="text-center mb-10">
           <div className="text-yellow-400 text-sm font-semibold tracking-widest mb-2">ПІКІРЛЕР</div>
-          <h2 className="text-4xl font-black">Оқушылар не дейді?</h2>
+          <h2 className="text-2xl md:text-4xl font-black">Оқушылар не дейді?</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
@@ -158,37 +176,37 @@ export default function Home() {
       </section>
 
       {/* ТІРКЕЛУ ФОРМАСЫ */}
-      <section id="form" className="py-20 px-8 max-w-2xl mx-auto text-center">
-        <div className="bg-gradient-to-br from-blue-900/50 to-blue-800/20 border border-yellow-500/20 rounded-3xl p-12">
+      <section id="form" className="py-16 md:py-20 px-4 md:px-8 max-w-2xl mx-auto text-center">
+        <div className="bg-gradient-to-br from-blue-900/50 to-blue-800/20 border border-yellow-500/20 rounded-3xl p-8 md:p-12">
           <div className="text-yellow-400 text-sm font-semibold tracking-widest mb-2">ТЕГІН</div>
-          <h2 className="text-3xl font-black mb-3">Алғашқы сабаққа тіркелу</h2>
-          <p className="text-gray-300 mb-8">Аты-жөніңіз бен телефоныңызды қалдырыңыз</p>
+          <h2 className="text-2xl md:text-3xl font-black mb-3">Алғашқы сабаққа тіркелу</h2>
+          <p className="text-gray-300 mb-8 text-sm md:text-base">Аты-жөніңіз бен телефоныңызды қалдырыңыз</p>
           {formSent ? (
             <div className="bg-green-500/20 border border-green-500/30 text-green-400 px-6 py-4 rounded-xl text-lg font-semibold">
               ✅ Сәтті жіберілді! Жақында хабарласамыз.
             </div>
           ) : (
             <>
-              <div className="flex gap-3 flex-wrap justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <input
                   type="text"
                   placeholder="Аты-жөніңіз"
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
-                  className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition"
+                  className="w-full sm:w-auto bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition"
                 />
                 <input
                   type="tel"
                   placeholder="Телефон нөмірі"
                   value={formPhone}
                   onChange={e => setFormPhone(e.target.value)}
-                  className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition"
+                  className="w-full sm:w-auto bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition"
                 />
               </div>
               <button
                 onClick={handleFormSubmit}
                 disabled={formLoading}
-                className="mt-4 bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-black px-8 py-3 rounded-xl font-bold transition"
+                className="mt-4 w-full sm:w-auto bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-black px-8 py-3 rounded-xl font-bold transition"
               >
                 {formLoading ? "Жіберілуде..." : "Тегін тіркелу →"}
               </button>
@@ -198,10 +216,10 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-10 px-8 max-w-2xl mx-auto">
+      <section id="faq" className="py-10 px-4 md:px-8 max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <div className="text-yellow-400 text-sm font-semibold tracking-widest mb-2">FAQ</div>
-          <h2 className="text-4xl font-black">Жиі қойылатын сұрақтар</h2>
+          <h2 className="text-2xl md:text-4xl font-black">Жиі қойылатын сұрақтар</h2>
         </div>
         <div className="flex flex-col gap-4">
           {[
@@ -211,7 +229,7 @@ export default function Home() {
             { q: "Нәтиже болмаса ақша қайтарыла ма?", a: "Иә, 14 күн ішінде толық ақша қайтарылады." },
           ].map((f) => (
             <div key={f.q} className="bg-white/5 border border-white/10 rounded-xl p-5">
-              <div className="font-semibold mb-2">{f.q}</div>
+              <div className="font-semibold mb-2 text-sm md:text-base">{f.q}</div>
               <div className="text-gray-400 text-sm">{f.a}</div>
             </div>
           ))}
@@ -219,9 +237,9 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/10 text-center py-8 text-gray-500 text-sm mt-10">
+      <footer className="border-t border-white/10 text-center py-8 text-gray-500 text-sm mt-10 px-4">
         © 2025 <span className="text-yellow-400">MathPro KZ</span> · Барлық құқықтар қорғалған
-        <div className="flex justify-center gap-6 mt-3">
+        <div className="flex justify-center gap-4 md:gap-6 mt-3 flex-wrap">
           <Link href="/login" className="hover:text-yellow-400 transition">Кіру</Link>
           <Link href="/dashboard" className="hover:text-yellow-400 transition">Дашборд</Link>
           <Link href="/tests" className="hover:text-yellow-400 transition">Тесттер</Link>
