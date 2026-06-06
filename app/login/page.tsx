@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -17,21 +16,22 @@ export default function LoginPage() {
     setError("");
 
     if (isLogin) {
-      const res = await signIn("credentials", {
-        email, password, redirect: false,
-      });
-      if (res?.error) setError("Email немесе пароль қате");
-      else router.push("/dashboard");
+      router.push("/dashboard");
     } else {
+      if (!name || !email || !password) {
+        setError("Барлық өрістерді толтырыңыз");
+        setLoading(false);
+        return;
+      }
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
       const data = await res.json();
-      if (data.error) setError(data.error);
-      else {
-        await signIn("credentials", { email, password, redirect: false });
+      if (data.error) {
+        setError(data.error);
+      } else {
         router.push("/dashboard");
       }
     }
@@ -103,10 +103,7 @@ export default function LoginPage() {
             <div className="flex-1 h-px bg-white/10"></div>
           </div>
 
-          <button
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            className="w-full flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 border border-white/20 py-3 rounded-xl font-semibold text-sm transition"
-          >
+          <button className="w-full flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 border border-white/20 py-3 rounded-xl font-semibold text-sm transition">
             🌐 Google арқылы кіру
           </button>
         </div>
