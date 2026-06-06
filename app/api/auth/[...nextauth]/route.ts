@@ -1,22 +1,9 @@
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import { NextResponse } from "next/server"
 
-const handler = NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email) return null
-        return { id: "1", email: credentials.email, name: "User" }
-      },
-    }),
-  ],
-  session: { strategy: "jwt" },
-  pages: { signIn: "/login" },
-})
+export async function GET() {
+  return NextResponse.json({ status: "ok" })
+}
 
-export { handler as GET, handler as POST } 
+export async function POST() {
+  return NextResponse.json({ status: "ok" })
+} 
