@@ -1,6 +1,27 @@
+"use client"
+import { useState } from "react"
 import Link from "next/link"
 
 export default function Home() {
+  const [formName, setFormName] = useState("")
+  const [formPhone, setFormPhone] = useState("")
+  const [formLoading, setFormLoading] = useState(false)
+  const [formSent, setFormSent] = useState(false)
+
+  async function handleFormSubmit() {
+    if (!formName || !formPhone) return
+    setFormLoading(true)
+    await fetch("/api/telegram", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: `🆕 Жаңа тіркелу!\n👤 Аты: ${formName}\n📞 Телефон: ${formPhone}`,
+      }),
+    })
+    setFormSent(true)
+    setFormLoading(false)
+  }
+
   return (
     <main className="min-h-screen bg-[#0A1628] text-white">
 
@@ -34,8 +55,6 @@ export default function Home() {
             Тегін сабақ
           </a>
         </div>
-
-        {/* STATS */}
         <div className="flex justify-center gap-12 mt-16 flex-wrap">
           <div><div className="text-4xl font-black text-yellow-400">1200+</div><div className="text-gray-400 text-sm">Оқушы</div></div>
           <div><div className="text-4xl font-black text-yellow-400">94%</div><div className="text-gray-400 text-sm">Нәтиже</div></div>
@@ -144,13 +163,37 @@ export default function Home() {
           <div className="text-yellow-400 text-sm font-semibold tracking-widest mb-2">ТЕГІН</div>
           <h2 className="text-3xl font-black mb-3">Алғашқы сабаққа тіркелу</h2>
           <p className="text-gray-300 mb-8">Аты-жөніңіз бен телефоныңызды қалдырыңыз</p>
-          <div className="flex gap-3 flex-wrap justify-center">
-            <input type="text" placeholder="Аты-жөніңіз" className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition" />
-            <input type="tel" placeholder="Телефон нөмірі" className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition" />
-          </div>
-          <Link href="/login" className="mt-4 inline-block bg-yellow-500 hover:bg-yellow-400 text-black px-8 py-3 rounded-xl font-bold transition">
-            Тегін тіркелу →
-          </Link>
+          {formSent ? (
+            <div className="bg-green-500/20 border border-green-500/30 text-green-400 px-6 py-4 rounded-xl text-lg font-semibold">
+              ✅ Сәтті жіберілді! Жақында хабарласамыз.
+            </div>
+          ) : (
+            <>
+              <div className="flex gap-3 flex-wrap justify-center">
+                <input
+                  type="text"
+                  placeholder="Аты-жөніңіз"
+                  value={formName}
+                  onChange={e => setFormName(e.target.value)}
+                  className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition"
+                />
+                <input
+                  type="tel"
+                  placeholder="Телефон нөмірі"
+                  value={formPhone}
+                  onChange={e => setFormPhone(e.target.value)}
+                  className="bg-white/10 border border-white/20 text-white placeholder-gray-400 px-4 py-3 rounded-xl outline-none focus:border-yellow-500 transition"
+                />
+              </div>
+              <button
+                onClick={handleFormSubmit}
+                disabled={formLoading}
+                className="mt-4 bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-black px-8 py-3 rounded-xl font-bold transition"
+              >
+                {formLoading ? "Жіберілуде..." : "Тегін тіркелу →"}
+              </button>
+            </>
+          )}
         </div>
       </section>
 
@@ -188,4 +231,4 @@ export default function Home() {
 
     </main>
   )
-}  
+} 
