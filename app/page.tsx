@@ -2,13 +2,15 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 
+type User = { name: string; email: string }
+
 export default function Home() {
   const [formName, setFormName] = useState("")
   const [formPhone, setFormPhone] = useState("")
   const [formLoading, setFormLoading] = useState(false)
   const [formSent, setFormSent] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     const userData = localStorage.getItem("user")
@@ -36,49 +38,44 @@ export default function Home() {
   }
 
   const courses = [
-    { id: 1, tag: "Базалық", title: "Математика негіздері", desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.", price: "25 000", rating: "4.7", students: "342", hot: false },
-    { id: 2, tag: "Орта деңгей", title: "ҰБТ Толық дайындық", desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.", price: "40 000", rating: "4.9", students: "687", hot: true },
-    { id: 3, tag: "Интенсив", title: "ҰБТ Экспресс: 100 балл", desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.", price: "75 000", rating: "4.8", students: "219", hot: false },
+    { id: 1, tag: "Базалық", title: "Matematika negizderi", displayTitle: "Математика негіздері", desc: "Алгебра, геометрия негіздері. 9-сынып білімін қалпына келтіру.", price: "25 000", rating: "4.7", students: "342", hot: false },
+    { id: 2, tag: "Орта деңгей", title: "UBT Tolyk dayyndyk", displayTitle: "ҰБТ Толық дайындық", desc: "ҰБТ барлық тақырыптары, нақты емтихан тесттері, қателерді талдау.", price: "40 000", rating: "4.9", students: "687", hot: true },
+    { id: 3, tag: "Интенсив", title: "UBT Ekspress 100 ball", displayTitle: "ҰБТ Экспресс: 100 балл", desc: "Жеделдетілген бағдарлама. Жеке коучинг, кепілдікті нәтиже.", price: "75 000", rating: "4.8", students: "219", hot: false },
   ]
 
   return (
     <main style={{ minHeight: "100vh", background: "white", color: "#1c1d1f", fontFamily: "Inter, sans-serif" }}>
 
-      {/* NAVBAR */}
       <nav style={{ background: "white", borderBottom: "1px solid #d1d7dc", padding: "0 1rem", height: "64px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "#5624d0" }}>IQ Math</div>
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
           {user ? (
-            <>
-              <Link href="/dashboard" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>
+            <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+              <Link href="/dashboard" style={{ background: "#5624d0", color: "white", padding: "0.5rem 1rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", minHeight: "44px", display: "flex", alignItems: "center" }}>
                 Дашборд
               </Link>
-              <div
-                onClick={handleLogout}
-                title="Шығу"
-                style={{ width: "34px", height: "34px", borderRadius: "50%", background: "#5624d0", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer" }}
-              >
-                {user.name?.[0]?.toUpperCase()}
+              <div onClick={handleLogout} style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#5624d0", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer" }}>
+                {user.name[0].toUpperCase()}
               </div>
-            </>
+            </div>
           ) : (
-            <>
-              <Link href="/login" style={{ border: "1px solid #1c1d1f", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", color: "#1c1d1f" }}>Кіру</Link>
-              <Link href="/login" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>Тіркелу</Link>
-            </>
+            <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+              <Link href="/login" style={{ border: "1px solid #1c1d1f", padding: "0.5rem 1rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", color: "#1c1d1f", minHeight: "44px", display: "flex", alignItems: "center" }}>Кіру</Link>
+              <Link href="/login" style={{ background: "#5624d0", color: "white", padding: "0.5rem 1rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", minHeight: "44px", display: "flex", alignItems: "center" }}>Тіркелу</Link>
+            </div>
           )}
-          <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", fontSize: "1.5rem", cursor: "pointer", color: "#1c1d1f", padding: "0.25rem" }}>
-            {menuOpen ? "✕" : "☰"}
+          <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", fontSize: "1.5rem", cursor: "pointer", color: "#1c1d1f", padding: "0.5rem", minWidth: "44px", minHeight: "44px" }}>
+            {menuOpen ? "X" : "="}
           </button>
         </div>
         {menuOpen && (
           <div style={{ position: "absolute", top: "64px", left: 0, right: 0, background: "white", borderBottom: "1px solid #d1d7dc", padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem", zIndex: 50 }}>
-            <a href="#courses" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>Курстар</a>
-            <a href="#teacher" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>Мұғалім</a>
-            <a href="#reviews" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>Пікірлер</a>
-            <a href="#faq" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500 }}>FAQ</a>
+            <a href="#courses" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500, padding: "0.5rem 0", display: "block" }}>Курстар</a>
+            <a href="#teacher" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500, padding: "0.5rem 0", display: "block" }}>Мұғалім</a>
+            <a href="#reviews" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500, padding: "0.5rem 0", display: "block" }}>Пікірлер</a>
+            <a href="#faq" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", color: "#1c1d1f", fontWeight: 500, padding: "0.5rem 0", display: "block" }}>FAQ</a>
             {user && (
-              <button onClick={handleLogout} style={{ background: "none", border: "none", color: "#dc2626", fontWeight: 600, cursor: "pointer", textAlign: "left", fontSize: "1rem", padding: 0 }}>
+              <button onClick={handleLogout} style={{ background: "none", border: "none", color: "#dc2626", fontWeight: 600, cursor: "pointer", textAlign: "left", fontSize: "1rem", padding: "0.5rem 0" }}>
                 Шығу
               </button>
             )}
@@ -86,7 +83,6 @@ export default function Home() {
         )}
       </nav>
 
-      {/* HERO */}
       <section style={{ background: "#f7f9fa", padding: "3rem 1rem", textAlign: "center" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           <div style={{ display: "inline-block", background: "#f4c150", color: "#1c1d1f", padding: "0.4rem 1rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, marginBottom: "1.25rem", letterSpacing: "1px" }}>
@@ -96,13 +92,13 @@ export default function Home() {
             ҰБТ математикасынан <span style={{ color: "#5624d0" }}>100 балл</span> алыңыз
           </h1>
           <p style={{ fontSize: "1rem", color: "#6a6f73", marginBottom: "1.5rem", lineHeight: 1.7 }}>
-            Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз. Нақты әдіс, нәтижелі сабақтар.
+            Өміртай Жасұланмен бірге ҰБТ-ға дайындалыңыз.
           </p>
           <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#courses" style={{ background: "#5624d0", color: "white", padding: "0.875rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none" }}>
-              Курсты бастау →
+            <a href="#courses" style={{ background: "#5624d0", color: "white", padding: "1rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "1rem", textDecoration: "none", minHeight: "44px", display: "inline-flex", alignItems: "center" }}>
+              Курсты бастау
             </a>
-            <a href="#form" style={{ background: "white", color: "#5624d0", border: "2px solid #5624d0", padding: "0.875rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none" }}>
+            <a href="#form" style={{ background: "white", color: "#5624d0", border: "2px solid #5624d0", padding: "1rem 1.5rem", borderRadius: "4px", fontWeight: 700, fontSize: "1rem", textDecoration: "none", minHeight: "44px", display: "inline-flex", alignItems: "center" }}>
               Тегін сабақ
             </a>
           </div>
@@ -117,7 +113,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COURSES */}
       <section id="courses" style={{ padding: "3rem 1rem", maxWidth: "1200px", margin: "0 auto" }}>
         <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "0.5rem" }}>Курстар</h2>
         <p style={{ color: "#6a6f73", marginBottom: "1.5rem", fontSize: "0.9rem" }}>Мақсатыңызға сәйкес курс таңдаңыз</p>
@@ -128,22 +123,20 @@ export default function Home() {
               <div style={{ background: "#f7f9fa", height: "120px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.5rem" }}>📐</div>
               <div style={{ padding: "1rem" }}>
                 <div style={{ fontSize: "0.75rem", color: "#5624d0", fontWeight: 700, marginBottom: "0.4rem" }}>{c.tag}</div>
-                <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "0.4rem", lineHeight: 1.3 }}>{c.title}</h3>
+                <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "0.4rem", lineHeight: 1.3 }}>{c.displayTitle}</h3>
                 <p style={{ fontSize: "0.8rem", color: "#6a6f73", marginBottom: "0.75rem", lineHeight: 1.5 }}>{c.desc}</p>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
                   <span style={{ color: "#b4690e", fontWeight: 700, fontSize: "0.8rem" }}>{c.rating} ★</span>
                   <span style={{ color: "#6a6f73", fontSize: "0.75rem" }}>({c.students} оқушы)</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid #d1d7dc", paddingTop: "0.75rem" }}>
-                  <div style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1c1d1f" }}>{c.price} ₸<span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#6a6f73" }}>/ай</span></div>
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
-                    <Link href={"/courses/" + c.id} style={{ background: "white", color: "#5624d0", border: "1px solid #5624d0", padding: "0.4rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textDecoration: "none" }}>
-                      Толығырақ
-                    </Link>
-                    <a href={"https://wa.me/87075687067?text=Салем! " + c.title + " курсын алгым келеді. Багасы: " + c.price + " тенге/ай"} target="_blank" rel="noopener noreferrer" style={{ background: "#5624d0", color: "white", padding: "0.4rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textDecoration: "none" }}>
-                      Сатып алу
-                    </a>
-                  </div>
+                <div style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "0.75rem" }}>{c.price} ₸<span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#6a6f73" }}>/ай</span></div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <Link href={"/courses/" + c.id} style={{ display: "block", background: "white", color: "#5624d0", border: "1px solid #5624d0", padding: "0.875rem", borderRadius: "4px", fontSize: "0.875rem", fontWeight: 700, textDecoration: "none", textAlign: "center", minHeight: "44px" }}>
+                    Толығырақ
+                  </Link>
+                  <a href={"https://wa.me/77075687067?text=Salam! " + c.title + " kursyn alyghym keledi. Bagasy: " + c.price + " tenge/ay"} target="_blank" rel="noopener noreferrer" style={{ display: "block", background: "#5624d0", color: "white", padding: "0.875rem", borderRadius: "4px", fontSize: "0.875rem", fontWeight: 700, textDecoration: "none", textAlign: "center", minHeight: "44px" }}>
+                    Сатып алу
+                  </a>
                 </div>
               </div>
             </div>
@@ -151,7 +144,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* МҰҒАЛІМ */}
       <section id="teacher" style={{ background: "#f7f9fa", padding: "3rem 1rem" }}>
         <div style={{ maxWidth: "900px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "1.5rem" }}>Мұғалім туралы</h2>
@@ -168,13 +160,12 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <p style={{ color: "#6a6f73", lineHeight: 1.6, fontSize: "0.875rem" }}>500+ оқушы ҰБТ-да 90+ балл алды. Авторлық әдіс бойынша оқытады.</p>
+              <p style={{ color: "#6a6f73", lineHeight: 1.6, fontSize: "0.875rem" }}>500+ оқушы ҰБТ-да 90+ балл алды.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ПІКІРЛЕР */}
       <section id="reviews" style={{ padding: "3rem 1rem", maxWidth: "1200px", margin: "0 auto" }}>
         <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "1.5rem" }}>Оқушылар пікірлері</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem" }}>
@@ -198,7 +189,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ТІРКЕЛУ ФОРМАСЫ */}
       <section id="form" style={{ background: "#5624d0", padding: "3rem 1rem", textAlign: "center" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "white", marginBottom: "0.75rem" }}>Тегін сабаққа тіркелу</h2>
@@ -210,18 +200,17 @@ export default function Home() {
           ) : (
             <div>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1rem" }}>
-                <input type="text" placeholder="Аты-жөніңіз" value={formName} onChange={(e) => setFormName(e.target.value)} style={{ padding: "0.875rem 1rem", borderRadius: "4px", border: "none", fontSize: "1rem", outline: "none", width: "100%", boxSizing: "border-box" }} />
-                <input type="tel" placeholder="Телефон нөмірі" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} style={{ padding: "0.875rem 1rem", borderRadius: "4px", border: "none", fontSize: "1rem", outline: "none", width: "100%", boxSizing: "border-box" }} />
+                <input type="text" placeholder="Аты-жөніңіз" value={formName} onChange={(e) => setFormName(e.target.value)} style={{ padding: "1rem", borderRadius: "4px", border: "none", fontSize: "1rem", outline: "none", width: "100%", boxSizing: "border-box", minHeight: "52px" }} />
+                <input type="tel" placeholder="Телефон нөмірі" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} style={{ padding: "1rem", borderRadius: "4px", border: "none", fontSize: "1rem", outline: "none", width: "100%", boxSizing: "border-box", minHeight: "52px" }} />
               </div>
-              <button onClick={handleFormSubmit} disabled={formLoading} style={{ background: "#f4c150", color: "#1c1d1f", padding: "0.875rem 2rem", borderRadius: "4px", fontWeight: 700, border: "none", cursor: "pointer", fontSize: "1rem", width: "100%" }}>
-                {formLoading ? "Жіберілуде..." : "Тегін тіркелу →"}
+              <button onClick={handleFormSubmit} disabled={formLoading} style={{ background: "#f4c150", color: "#1c1d1f", padding: "1rem 2rem", borderRadius: "4px", fontWeight: 700, border: "none", cursor: "pointer", fontSize: "1rem", width: "100%", minHeight: "52px" }}>
+                {formLoading ? "Жіберілуде..." : "Тегін тіркелу"}
               </button>
             </div>
           )}
         </div>
       </section>
 
-      {/* FAQ */}
       <section id="faq" style={{ padding: "3rem 1rem", maxWidth: "800px", margin: "0 auto" }}>
         <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "1.5rem" }}>Жиі қойылатын сұрақтар</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -239,14 +228,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHATSAPP */}
-      <a href="https://wa.me/87075687067?text=Салем! Курс туралы суракым бар." target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "1.5rem", right: "1.5rem", width: "52px", height: "52px", borderRadius: "50%", background: "#25D366", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "1.25rem", textDecoration: "none", boxShadow: "0 4px 20px rgba(37,211,102,0.4)", zIndex: 50 }}>
+      <a href="https://wa.me/77075687067?text=Salam! Kurs turaly suragym bar." target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "1.5rem", right: "1.5rem", width: "56px", height: "56px", borderRadius: "50%", background: "#25D366", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "1.5rem", textDecoration: "none", boxShadow: "0 4px 20px rgba(37,211,102,0.4)", zIndex: 50 }}>
         W
       </a>
 
-      {/* FOOTER */}
       <footer style={{ borderTop: "1px solid #d1d7dc", textAlign: "center", padding: "1.5rem 1rem", color: "#6a6f73", fontSize: "0.8rem" }}>
-        © 2025 <span style={{ color: "#5624d0", fontWeight: 700 }}>IQ Math</span> · Барлық құқықтар қорғалған
+        2025 IQ Math. Барлық құқықтар қорғалған.
         <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginTop: "0.75rem", flexWrap: "wrap" }}>
           <Link href="/login" style={{ color: "#6a6f73", textDecoration: "none" }}>Кіру</Link>
           <Link href="/dashboard" style={{ color: "#6a6f73", textDecoration: "none" }}>Дашборд</Link>
