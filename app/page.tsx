@@ -244,13 +244,14 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer style={{ borderTop: "1px solid #d1d7dc", textAlign: "center", padding: "1.25rem 1rem", color: "#6a6f73", fontSize: "0.78rem" }}>
-        2025 IQ Math. Барлық құқықтар қорғалған.
-        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginTop: "0.625rem", flexWrap: "wrap" }}>
-          <Link href="/login" style={{ color: "#6a6f73", textDecoration: "none" }}>Кіру</Link>
-          <Link href="/dashboard" style={{ color: "#6a6f73", textDecoration: "none" }}>Дашборд</Link>
-          <Link href="/tests" style={{ color: "#6a6f73", textDecoration: "none" }}>Тесттер</Link>
-        </div>
-      </footer>
+  2025 IQ Math. Барлық құқықтар қорғалған.
+  <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginTop: "0.625rem", flexWrap: "wrap" }}>
+    <Link href="/login" style={{ color: "#6a6f73", textDecoration: "none" }}>Кіру</Link>
+    <Link href="/dashboard" style={{ color: "#6a6f73", textDecoration: "none" }}>Дашборд</Link>
+    <Link href="/tests" style={{ color: "#6a6f73", textDecoration: "none" }}>Тесттер</Link>
+    <Link href="/admin" style={{ color: "#d1d7dc", textDecoration: "none", fontSize: "0.65rem" }}>Admin</Link>
+  </div>
+</footer>
 
     </main>
   )
