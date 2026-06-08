@@ -96,11 +96,18 @@ const materials = {
   },
 }
 
+const testHistory = [
+  { date: "01.06.2025", topic: "Алгебра", score: 18, total: 20, time: "24 мин" },
+  { date: "28.05.2025", topic: "Геометрия", score: 14, total: 20, time: "31 мин" },
+  { date: "25.05.2025", topic: "Тригонометрия", score: 12, total: 20, time: "28 мин" },
+  { date: "20.05.2025", topic: "Жалпы", score: 16, total: 20, time: "35 мин" },
+]
+
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null)
   const [hasPurchased, setHasPurchased] = useState(false)
   const [pkg, setPkg] = useState("basic")
-  const [activeTab, setActiveTab] = useState("Сабақтар")
+  const [activeTab, setActiveTab] = useState("Негізгі")
   const [watchingVideo, setWatchingVideo] = useState<number | null>(null)
   const [completedVideos, setCompletedVideos] = useState<number[]>([])
   const [homeworks, setHomeworks] = useState<Record<number, boolean>>({})
@@ -161,6 +168,8 @@ export default function Dashboard() {
   const doneVideos = mat.videos.filter(v => completedVideos.includes(v.id)).length
   const progress = Math.round((doneVideos / totalVideos) * 100)
   const topics = [...new Set(mat.videos.map(v => v.topic))]
+  const avgScore = Math.round(testHistory.reduce((a, t) => a + (t.score / t.total * 100), 0) / testHistory.length)
+  const doneHW = mat.homeworks.filter(h => homeworks[h.id] || h.done).length
 
   return (
     <main style={{ minHeight: "100vh", background: "#f7f9fa", fontFamily: "Inter, sans-serif", paddingBottom: "80px" }}>
@@ -180,34 +189,94 @@ export default function Dashboard() {
 
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "1.25rem 1rem" }}>
 
-        {/* ПРОГРЕСС */}
-        <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.1rem", marginBottom: "1rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.625rem" }}>
-            <div>
-              <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1c1d1f" }}>Сәлем, {user.name}! 👋</span>
-              <div style={{ fontSize: "0.75rem", color: "#6a6f73" }}>{doneVideos}/{totalVideos} сабақ аяқталды</div>
-            </div>
-            <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "#5624d0" }}>{progress}%</span>
-          </div>
-          <div style={{ height: "8px", background: "#f7f9fa", borderRadius: "4px", overflow: "hidden" }}>
-            <div style={{ height: "100%", width: progress + "%", background: "linear-gradient(90deg, #5624d0, #a435f0)", borderRadius: "4px", transition: "width 0.5s" }}></div>
-          </div>
-        </div>
-
         {/* TABS */}
         <div style={{ display: "flex", gap: "0.375rem", overflowX: "auto", marginBottom: "1rem", paddingBottom: "0.25rem" }}>
-          {["Сабақтар", "PDF", "Үй тапсырмасы", "Тест"].map((tab) => (
+          {["Негізгі", "Сабақтар", "PDF", "Үй тапсырмасы", "Тест", "Жетістіктер"].map((tab) => (
             <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "0.5rem 0.875rem", borderRadius: "4px", background: activeTab === tab ? "#5624d0" : "white", color: activeTab === tab ? "white" : "#1c1d1f", fontWeight: activeTab === tab ? 700 : 400, fontSize: "0.8rem", cursor: "pointer", whiteSpace: "nowrap", border: "1px solid #d1d7dc" }}>
-              {tab === "Сабақтар" && "🎬 "}
-              {tab === "PDF" && "📄 "}
-              {tab === "Үй тапсырмасы" && "📝 "}
-              {tab === "Тест" && "✅ "}
               {tab}
             </button>
           ))}
         </div>
 
-        {/* ВИДЕО САБАҚТАР */}
+        {/* НЕГІЗГІ */}
+        {activeTab === "Негізгі" && (
+          <div>
+            {/* ПРОГРЕСС */}
+            <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem", marginBottom: "1rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                <div>
+                  <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1c1d1f" }}>Сәлем, {user.name}! 👋</div>
+                  <div style={{ fontSize: "0.75rem", color: "#6a6f73" }}>{doneVideos}/{totalVideos} сабақ аяқталды</div>
+                </div>
+                <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "#5624d0" }}>{progress}%</span>
+              </div>
+              <div style={{ height: "8px", background: "#f7f9fa", borderRadius: "4px", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: progress + "%", background: "linear-gradient(90deg, #5624d0, #a435f0)", borderRadius: "4px", transition: "width 0.5s" }}></div>
+              </div>
+            </div>
+
+            {/* STATS */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem", marginBottom: "1rem" }}>
+              {[
+                { icon: "🎬", label: "Сабақ", value: doneVideos },
+                { icon: "📝", label: "Тест орт.", value: avgScore + "%" },
+                { icon: "📋", label: "Үй тапс.", value: doneHW + "/" + mat.homeworks.length },
+              ].map((s) => (
+                <div key={s.label} style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "0.875rem", textAlign: "center" }}>
+                  <div style={{ fontSize: "1.25rem", marginBottom: "0.25rem" }}>{s.icon}</div>
+                  <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "#5624d0" }}>{s.value}</div>
+                  <div style={{ fontSize: "0.7rem", color: "#6a6f73" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* ТАҚЫРЫП ПРОГРЕСС */}
+            <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem", marginBottom: "1rem" }}>
+              <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "1rem" }}>Тақырып бойынша прогресс</h2>
+              {topics.map((topic) => {
+                const topicVideos = mat.videos.filter(v => v.topic === topic)
+                const topicDone = topicVideos.filter(v => completedVideos.includes(v.id)).length
+                const topicProgress = Math.round((topicDone / topicVideos.length) * 100)
+                return (
+                  <div key={topic} style={{ marginBottom: "0.875rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", marginBottom: "0.375rem" }}>
+                      <span style={{ fontWeight: 600, color: "#1c1d1f" }}>{topic}</span>
+                      <span style={{ color: topicProgress >= 70 ? "#16a34a" : topicProgress >= 40 ? "#d97706" : "#5624d0", fontWeight: 700 }}>{topicProgress}%</span>
+                    </div>
+                    <div style={{ height: "6px", background: "#f7f9fa", borderRadius: "3px", overflow: "hidden" }}>
+                      <div style={{ height: "100%", width: topicProgress + "%", background: topicProgress >= 70 ? "#16a34a" : topicProgress >= 40 ? "#d97706" : "#5624d0", borderRadius: "3px" }}></div>
+                    </div>
+                    <div style={{ fontSize: "0.68rem", color: "#6a6f73", marginTop: "0.2rem" }}>{topicDone}/{topicVideos.length} сабақ</div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* СОҢҒЫ ТЕСТ */}
+            <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+                <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1c1d1f" }}>Соңғы тест нәтижелері</h2>
+                <Link href="/tests" style={{ fontSize: "0.78rem", color: "#5624d0", fontWeight: 600, textDecoration: "none" }}>Тест тапсыру →</Link>
+              </div>
+              {testHistory.slice(0, 3).map((t, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.625rem 0", borderBottom: "1px solid #f7f9fa" }}>
+                  <div>
+                    <div style={{ fontSize: "0.825rem", fontWeight: 600, color: "#1c1d1f" }}>{t.topic}</div>
+                    <div style={{ fontSize: "0.7rem", color: "#6a6f73" }}>{t.date} · {t.time}</div>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: "0.9rem", fontWeight: 800, color: t.score / t.total >= 0.8 ? "#16a34a" : t.score / t.total >= 0.6 ? "#d97706" : "#dc2626" }}>
+                      {t.score}/{t.total}
+                    </div>
+                    <div style={{ fontSize: "0.7rem", color: "#6a6f73" }}>{Math.round(t.score / t.total * 100)}%</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* САБАҚТАР */}
         {activeTab === "Сабақтар" && (
           <div>
             {watchingVideo !== null && (
@@ -223,25 +292,22 @@ export default function Dashboard() {
                 </button>
               </div>
             )}
-
             {topics.map((topic) => (
               <div key={topic} style={{ marginBottom: "1.25rem" }}>
-                <div style={{ fontSize: "0.825rem", fontWeight: 700, color: "#5624d0", marginBottom: "0.625rem", textTransform: "uppercase", letterSpacing: "1px" }}>
-                  {topic}
-                </div>
+                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#5624d0", marginBottom: "0.625rem", textTransform: "uppercase", letterSpacing: "1px" }}>{topic}</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   {mat.videos.filter(v => v.topic === topic).map((video) => {
                     const done = completedVideos.includes(video.id)
                     return (
                       <div key={video.id} style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "0.875rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                        <button onClick={() => toggleVideo(video.id)} style={{ width: "24px", height: "24px", borderRadius: "4px", border: done ? "none" : "2px solid #d1d7dc", background: done ? "#16a34a" : "white", color: "white", fontSize: "0.75rem", cursor: "pointer", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <button onClick={() => toggleVideo(video.id)} style={{ width: "22px", height: "22px", borderRadius: "4px", border: done ? "none" : "2px solid #d1d7dc", background: done ? "#16a34a" : "white", color: "white", fontSize: "0.75rem", cursor: "pointer", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                           {done ? "✓" : ""}
                         </button>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: "0.875rem", fontWeight: 600, color: done ? "#6a6f73" : "#1c1d1f", textDecoration: done ? "line-through" : "none" }}>{video.title}</div>
                           <div style={{ fontSize: "0.72rem", color: "#6a6f73" }}>⏱ {video.duration}</div>
                         </div>
-                        <button onClick={() => setWatchingVideo(video.id)} style={{ background: "#5624d0", color: "white", border: "none", padding: "0.4rem 0.875rem", borderRadius: "4px", fontSize: "0.775rem", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
+                        <button onClick={() => setWatchingVideo(video.id)} style={{ background: "#5624d0", color: "white", border: "none", padding: "0.4rem 0.875rem", borderRadius: "4px", fontSize: "0.775rem", fontWeight: 600, cursor: "pointer" }}>
                           ▶ Қарау
                         </button>
                       </div>
@@ -300,13 +366,67 @@ export default function Dashboard() {
 
         {/* ТЕСТ */}
         {activeTab === "Тест" && (
-          <div style={{ textAlign: "center", background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "2rem" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>📝</div>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: 800, color: "#1c1d1f", marginBottom: "0.5rem" }}>ҰБТ форматындағы тест</h2>
-            <p style={{ color: "#6a6f73", marginBottom: "1.5rem", fontSize: "0.875rem" }}>20 сұрақ · 40 минут · ҰБТ форматы</p>
-            <Link href="/tests" style={{ display: "inline-block", background: "#5624d0", color: "white", padding: "0.875rem 2rem", borderRadius: "4px", fontWeight: 700, textDecoration: "none", fontSize: "0.95rem" }}>
-              Тест бастау →
+          <div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem", marginBottom: "1rem" }}>
+              {[
+                { label: "Тапсырылған", value: testHistory.length, icon: "📝" },
+                { label: "Орт. балл", value: avgScore + "%", icon: "📊" },
+                { label: "Үздік", value: Math.max(...testHistory.map(t => Math.round(t.score / t.total * 100))) + "%", icon: "🏆" },
+              ].map((s) => (
+                <div key={s.label} style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "0.875rem", textAlign: "center" }}>
+                  <div style={{ fontSize: "1.25rem", marginBottom: "0.25rem" }}>{s.icon}</div>
+                  <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "#5624d0" }}>{s.value}</div>
+                  <div style={{ fontSize: "0.7rem", color: "#6a6f73" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem", marginBottom: "1rem" }}>
+              <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "1rem" }}>Тест тарихы</h2>
+              {testHistory.map((t, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #f7f9fa" }}>
+                  <div>
+                    <div style={{ fontSize: "0.825rem", fontWeight: 600, color: "#1c1d1f" }}>{t.topic}</div>
+                    <div style={{ fontSize: "0.7rem", color: "#6a6f73" }}>{t.date} · {t.time}</div>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: "0.9rem", fontWeight: 800, color: t.score / t.total >= 0.8 ? "#16a34a" : t.score / t.total >= 0.6 ? "#d97706" : "#dc2626" }}>{t.score}/{t.total}</div>
+                      <div style={{ fontSize: "0.7rem", color: "#6a6f73" }}>{Math.round(t.score / t.total * 100)}%</div>
+                    </div>
+                    <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: t.score / t.total >= 0.8 ? "#dcfce7" : "#fef9c3", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.875rem" }}>
+                      {t.score / t.total >= 0.8 ? "🏆" : "👍"}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link href="/tests" style={{ display: "block", background: "#5624d0", color: "white", padding: "0.875rem", borderRadius: "4px", fontWeight: 700, textAlign: "center", textDecoration: "none" }}>
+              Жаңа тест тапсыру →
             </Link>
+          </div>
+        )}
+
+        {/* ЖЕТІСТІКТЕР */}
+        {activeTab === "Жетістіктер" && (
+          <div style={{ background: "white", border: "1px solid #d1d7dc", borderRadius: "8px", padding: "1.25rem" }}>
+            <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "1rem" }}>Жетістіктер</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "0.75rem" }}>
+              {[
+                { icon: "🔥", title: "Бірінші сабақ", desc: "Алғашқы сабақты аяқтадыңыз", done: doneVideos >= 1 },
+                { icon: "📝", title: "Тест чемпионы", desc: "90%+ нәтиже алдыңыз", done: avgScore >= 90 },
+                { icon: "⚡", title: "Белсенді оқушы", desc: "10+ сабақ аяқтадыңыз", done: doneVideos >= 10 },
+                { icon: "🏆", title: "Үздік оқушы", desc: "Барлық сабақты аяқтадыңыз", done: doneVideos === totalVideos },
+                { icon: "📚", title: "Кітапханашы", desc: "5+ сабақ аяқтадыңыз", done: doneVideos >= 5 },
+                { icon: "🎯", title: "Мерген", desc: "Үй тапсырмасын тапсырдыңыз", done: doneHW >= 1 },
+              ].map((a, i) => (
+                <div key={i} style={{ background: a.done ? "#f0fdf4" : "#fafafa", border: "1px solid " + (a.done ? "#bbf7d0" : "#e5e7eb"), borderRadius: "8px", padding: "0.875rem", textAlign: "center", opacity: a.done ? 1 : 0.5 }}>
+                  <div style={{ fontSize: "1.75rem", marginBottom: "0.375rem" }}>{a.icon}</div>
+                  <div style={{ fontSize: "0.775rem", fontWeight: 700, color: "#1c1d1f", marginBottom: "0.2rem" }}>{a.title}</div>
+                  <div style={{ fontSize: "0.68rem", color: "#6a6f73" }}>{a.desc}</div>
+                  {a.done && <div style={{ fontSize: "0.65rem", color: "#16a34a", fontWeight: 600, marginTop: "0.25rem" }}>✓ Алынды</div>}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
