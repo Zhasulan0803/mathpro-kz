@@ -61,8 +61,8 @@ export default function LoginPage() {
     setLoading(false)
   }
 
- function handleAccessCode() {
-  const code = accessCode.toUpperCase()
+function handleAccessCode() {
+  const code = accessCode.toUpperCase().trim()
   if (code === "BASIC2025") {
     localStorage.setItem("purchased", "true")
     localStorage.setItem("package", "basic")
@@ -79,7 +79,6 @@ export default function LoginPage() {
     setError("Код қате! Мұғалімнен дұрыс код алыңыз.")
   }
 }
-
   return (
     <main style={{ minHeight: "100vh", background: "#f7f9fa", display: "flex", flexDirection: "column", fontFamily: "Inter, sans-serif" }}>
       <nav style={{ background: "white", borderBottom: "1px solid #d1d7dc", padding: "0 1rem", height: "60px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -178,4 +177,4 @@ export default function LoginPage() {
       </div>
     </main>
   )
-}  
+}   
