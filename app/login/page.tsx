@@ -61,14 +61,24 @@ export default function LoginPage() {
     setLoading(false)
   }
 
-  function handleAccessCode() {
-    if (accessCode.toUpperCase() === ACCESS_CODE) {
-      localStorage.setItem("purchased", "true")
-      router.push("/dashboard")
-    } else {
-      setError("Код қате! Мұғалімнен дұрыс код алыңыз.")
-    }
+ function handleAccessCode() {
+  const code = accessCode.toUpperCase()
+  if (code === "BASIC2025") {
+    localStorage.setItem("purchased", "true")
+    localStorage.setItem("package", "basic")
+    router.push("/dashboard")
+  } else if (code === "FULL2025") {
+    localStorage.setItem("purchased", "true")
+    localStorage.setItem("package", "full")
+    router.push("/dashboard")
+  } else if (code === "VIP2025") {
+    localStorage.setItem("purchased", "true")
+    localStorage.setItem("package", "vip")
+    router.push("/dashboard")
+  } else {
+    setError("Код қате! Мұғалімнен дұрыс код алыңыз.")
   }
+}
 
   return (
     <main style={{ minHeight: "100vh", background: "#f7f9fa", display: "flex", flexDirection: "column", fontFamily: "Inter, sans-serif" }}>
@@ -168,4 +178,4 @@ export default function LoginPage() {
       </div>
     </main>
   )
-} 
+}  
